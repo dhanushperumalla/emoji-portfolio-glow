@@ -3,6 +3,7 @@
 
 import { useState, FormEvent } from "react"
 import { Send, Bot, Paperclip, Mic, CornerDownLeft } from "lucide-react"
+import { aiService } from "@/services/ai-service"
 import { Button } from "@/components/ui/button"
 import {
   ChatBubble,
@@ -35,7 +36,7 @@ export function PortfolioChatbot() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
 
@@ -49,28 +50,30 @@ export function PortfolioChatbot() {
     setInput("")
     setIsLoading(true)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "That's a great question! Dhanush has extensive experience in full-stack development and AI.",
-        "Dhanush specializes in React, Node.js, Python, and machine learning technologies.",
-        "His projects showcase innovative solutions in AI, web development, and workflow automation.",
-        "Feel free to check out his GitHub repositories for detailed code examples!",
-        "Dhanush is passionate about creating AI-powered solutions and modern web applications.",
-      ]
-      
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)]
+    try {
+      const aiResponse = await aiService.generateResponse(input)
       
       setMessages((prev) => [
         ...prev,
         {
           id: prev.length + 1,
-          content: randomResponse,
+          content: aiResponse,
           sender: "ai",
         },
       ])
+    } catch (error) {
+      console.error('Error getting AI response:', error)
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          content: "I apologize, but I encountered an error. Please try again.",
+          sender: "ai",
+        },
+      ])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   const handleAttachFile = () => {
