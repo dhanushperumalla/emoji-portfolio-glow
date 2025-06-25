@@ -29,7 +29,13 @@ const Hero = () => {
               Full-Stack & AI Developer passionate about creating amazing digital experiences with AI
             </p>
           </div>
-          
+          <div className="flex justify-center mb-6">
+          <div className="px-6 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center gap-2 shadow-md text-base text-gray-200 font-medium"
+              style={{ boxShadow: '0 4px 24px 0 rgba(31, 38, 135, 0.15)' }}>
+            Winner in oTTomator Live Agent Studio Hackathon
+            <span className="ml-2 text-lg">🏆</span>
+          </div>
+        </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-50">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
               <a href="#projects">View My Work</a>
