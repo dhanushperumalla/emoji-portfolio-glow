@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="md:col-span-2">
             <h3 className="text-2xl font-bold mb-4 gradient-text">Perumalla Venkata Naga Dhanush</h3>
             <p className="text-muted-foreground mb-4 max-w-md">
-              Full-Stack Developer passionate about creating innovative solutions and beautiful user experiences.
+              Full-Stack & AI Developer passionate about creating innovative solutions with AI.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
