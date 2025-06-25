@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Projects = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A modern e-commerce solution built with React, Node.js, and Stripe integration for seamless payments.",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
-      github: "#",
+      title: "Course Guider Agent",
+      description: "A modern AI Chat Bot built with React, N8N integration for Agentic Workflow.",
+      image: "/courseguideragent.jpg",
+      tags: ["React", "N8N"],
+      github: "https://github.com/dhanushperumalla/Course-Guider-Agent",
       live: "#"
     },
     {
@@ -52,6 +56,15 @@ const Projects = () => {
       live: "#"
     }
   ];
+
+  const handleLiveDemoClick = (liveLink: string) => {
+    if (liveLink && liveLink !== "#") {
+      window.open(liveLink, "_blank", "noopener,noreferrer");
+    } else {
+      setModalMessage("The project hasn't been deployed yet.");
+      setShowModal(true);
+    }
+  };
 
   return (
     <section className="py-20">
@@ -102,16 +115,32 @@ const Projects = () => {
               </CardContent>
               
               <CardFooter className="gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
-                  View Code
-                </Button>
-                <Button size="sm" className="flex-1">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <Button variant="outline" size="sm" className="w-full">
+                    View Code
+                  </Button>
+                </a>
+                <Button size="sm" className="flex-1" onClick={() => handleLiveDemoClick(project.live)}>
                   Live Demo
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
+        {/* Modal Popup */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6 shadow-2xl max-w-sm w-full text-center" style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' }}>
+              <p className="mb-4 text-lg text-gray-100">{modalMessage}</p>
+              <Button onClick={() => setShowModal(false)} className="bg-primary text-white w-full">Close</Button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
