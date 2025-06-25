@@ -6,6 +6,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import MobileNavigation from "@/components/MobileNavigation";
 import { NavBar } from "@/components/ui/tubelight-navbar";
+import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { Home, User, Briefcase, FileText } from "lucide-react";
 
 const Index = () => {
@@ -35,6 +36,7 @@ const Index = () => {
       </main>
       <Footer />
       <MobileNavigation />
+      <PortfolioChatbot />
     </div>
   );
 };
