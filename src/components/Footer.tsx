@@ -12,17 +12,17 @@ const Footer = () => {
               Full-Stack & AI Developer passionate about creating innovative solutions with AI.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://github.com/dhanushperumalla" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
                 GitHub
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/in/dhanushperumalla/" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
                 LinkedIn
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://x.com/Dhanush1234N" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
                 Twitter
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Dribbble
+              <a href="https://www.instagram.com/dhanush__perumalla__/" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
+                Instagram
               </a>
             </div>
           </div>
@@ -41,9 +41,9 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
               <li><span className="text-muted-foreground">Web Development</span></li>
-              <li><span className="text-muted-foreground">UI/UX Design</span></li>
-              <li><span className="text-muted-foreground">Mobile Apps</span></li>
-              <li><span className="text-muted-foreground">Consulting</span></li>
+              <li><span className="text-muted-foreground">Workflow Automation</span></li>
+              <li><span className="text-muted-foreground">Agentic AI Solutions</span></li>
+              <li><span className="text-muted-foreground">Machine Learnning</span></li>
             </ul>
           </div>
         </div>

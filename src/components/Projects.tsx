@@ -18,7 +18,7 @@ const Projects = () => {
     {
       title: "Log Classification",
       description: "AI-powered log classification system combining regex, machine learning, and LLMs for efficient and accurate log analysis.",
-      image: "/Log Classification.png",
+      image: "/LogClassification.png",
       tags: ["Logistic Regression", "Sentence Transformers", "Node.JS","React.JS"],
       github: "https://github.com/dhanushperumalla/LogClassification",
       live: "#"
@@ -26,7 +26,7 @@ const Projects = () => {
     {
       title: "Fraud Suraksha",
       description: "An AI-powered fraud detection assistant built using the Agentic RAG approach with Google’s Gemini, offering context-aware risk assessment for messages, people, and situations.",
-      image: "/Fraud Suraksha.png",
+      image: "/FraudSuraksha.png",
       tags: ["Python", "Streamlit", "Langchain","Agentic Rag"],
       github: "https://github.com/dhanushperumalla/Fraud-Suraksha",
       live: "#"
@@ -43,7 +43,7 @@ const Projects = () => {
     {
       title: "Student Marks Predection",
       description: "Developed a Flask-based Student Exam Performance Predictor using ML algorithms and text vectorization techniques (Bag of Words, TF-IDF), achieving 80% accuracy in forecasting student scores through real-time inputs.",
-      image: "/students marks predection.png",
+      image: "/studentsmarkspredection.png",
       tags: ["Python", "Flask", "TF-IDF"],
       github: "https://github.com/dhanushperumalla/ML-Project",
       live: "#"
@@ -51,7 +51,7 @@ const Projects = () => {
     {
       title: "Sketch-Solve",
       description: "Sketch-Solve is a real-time hand gesture recognition system that interprets mathematical equations drawn in the air using OpenCV, providing instant AI-powered feedback and solutions.",
-      image: "/Sketch Solve.png",
+      image: "/SketchSolve.png",
       tags: ["Python", "OpenCV", "LangChain"],
       github: "https://github.com/dhanushperumalla/Sketch-Solve",
       live: "#"
@@ -59,7 +59,7 @@ const Projects = () => {
     {
       title: "IPL Win Predection",
       description: "Built an IPL Win Probability Predictor using Logistic Regression and Streamlit, delivering real-time match outcome predictions based on historical data (2008–2019) and current match parameters like teams, score, and overs.",
-      image: "/IPL WIn Predictor.png",
+      image: "/IPLWInPredictor.png",
       tags: ["Python", "Streamlit", "Logistic Regression"],
       github: "https://github.com/dhanushperumalla/IPL-Win-Probability-Predictor",
       live: "#"
