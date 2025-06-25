@@ -1,4 +1,3 @@
-
 import { IconCloud } from "@/components/ui/interactive-icon-cloud";
 
 const Skills = () => {
@@ -12,13 +11,17 @@ const Skills = () => {
     { name: "CSS3", emoji: "💙", level: 90, slug: "css3" },
     { name: "Next.js", emoji: "▲", level: 85, slug: "nextdotjs" },
     { name: "Express", emoji: "🚀", level: 80, slug: "express" },
+    { name: "N8N", emoji: "⚡", level: 80, slug: "n8n" },
+    { name: "LangChain", emoji: "🦜", level: 80, slug: "langchain" },
+    { name: "CrewAI", emoji: "🚣", level: 80, slug: "crewai" },
     { name: "PostgreSQL", emoji: "🐘", level: 75, slug: "postgresql" },
+    { name: "MY-SQL", emoji: "🐟", level: 75, slug: "mysql" },
+    { name: "MongoDB", emoji: "☘️", level: 75, slug: "mongodb" },
     { name: "AWS", emoji: "☁️", level: 70, slug: "amazonaws" },
     { name: "Docker", emoji: "🐳", level: 75, slug: "docker" },
     { name: "Git", emoji: "📋", level: 90, slug: "git" },
     { name: "GitHub", emoji: "🐙", level: 90, slug: "github" },
     { name: "VS Code", emoji: "💻", level: 95, slug: "visualstudiocode" },
-    { name: "Figma", emoji: "🎨", level: 80, slug: "figma" }
   ];
 
   const iconSlugs = skills.map(skill => skill.slug);
@@ -38,15 +41,15 @@ const Skills = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
           {/* Skills Grid - Left Side */}
           <div className="animate-slide-in-left">
-            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
-              {skills.map((skill, index) => (
+            <div className="grid grid-cols-4 gap-3 max-w-md mx-auto lg:mx-0">
+              {skills.slice(0, 20).map((skill, index) => (
                 <div
                   key={skill.name}
-                  className="bg-card border border-border rounded-lg p-6 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
+                  className="bg-card border border-border rounded-lg p-3 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="text-3xl mb-2">{skill.emoji}</div>
-                  <h3 className="text-sm font-medium text-center">{skill.name}</h3>
+                  <div className="text-2xl mb-1">{skill.emoji}</div>
+                  <h3 className="text-xs font-medium text-center">{skill.name}</h3>
                 </div>
               ))}
             </div>
