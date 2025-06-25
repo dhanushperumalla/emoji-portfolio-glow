@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from "react"
@@ -30,6 +31,44 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
+
+  // Intersection Observer for scroll-based active state
+  useEffect(() => {
+    const sections = items.map(item => {
+      const sectionId = item.url.replace('#', '')
+      return document.getElementById(sectionId)
+    }).filter(Boolean)
+
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id
+            const matchingItem = items.find(item => item.url === `#${sectionId}`)
+            if (matchingItem) {
+              setActiveTab(matchingItem.name)
+            }
+          }
+        })
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '-20% 0px -20% 0px' // Adjust the trigger area
+      }
+    )
+
+    sections.forEach(section => {
+      if (section) observer.observe(section)
+    })
+
+    return () => {
+      sections.forEach(section => {
+        if (section) observer.unobserve(section)
+      })
+    }
+  }, [items])
 
   const handleItemClick = (item: NavItem) => {
     setActiveTab(item.name)

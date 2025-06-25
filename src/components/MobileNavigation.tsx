@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { InteractiveMenu, InteractiveMenuItem } from "@/components/ui/modern-mobile-menu";
-import { Home, Briefcase, Calendar, Settings } from 'lucide-react';
+import { Home, User, Briefcase, FileText } from 'lucide-react';
 
 const MobileNavigation = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const checkMobile = () => {
@@ -14,6 +15,38 @@ const MobileNavigation = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Intersection Observer for scroll-based active state
+  useEffect(() => {
+    const sections = ['home', 'skills', 'projects', 'contact'];
+    const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
+
+    if (sectionElements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '-20% 0px -20% 0px'
+      }
+    );
+
+    sectionElements.forEach(section => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionElements.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -36,7 +69,7 @@ const MobileNavigation = () => {
     { 
       label: 'Skills', 
       icon: ({ className }) => (
-        <Briefcase 
+        <User 
           className={className} 
           onClick={() => scrollToSection('skills')}
         />
@@ -45,7 +78,7 @@ const MobileNavigation = () => {
     { 
       label: 'Projects', 
       icon: ({ className }) => (
-        <Calendar 
+        <Briefcase 
           className={className} 
           onClick={() => scrollToSection('projects')}
         />
@@ -54,7 +87,7 @@ const MobileNavigation = () => {
     { 
       label: 'Contact', 
       icon: ({ className }) => (
-        <Settings 
+        <FileText 
           className={className} 
           onClick={() => scrollToSection('contact')}
         />
