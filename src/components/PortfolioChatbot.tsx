@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, FormEvent } from "react"
@@ -104,15 +103,6 @@ export function PortfolioChatbot() {
               key={message.id}
               variant={message.sender === "user" ? "sent" : "received"}
             >
-              <ChatBubbleAvatar
-                className="h-8 w-8 shrink-0"
-                src={
-                  message.sender === "user"
-                    ? "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&q=80&crop=faces&fit=crop"
-                    : "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=64&h=64&q=80&crop=faces&fit=crop"
-                }
-                fallback={message.sender === "user" ? "YU" : "AI"}
-              />
               <ChatBubbleMessage
                 variant={message.sender === "user" ? "sent" : "received"}
               >
@@ -123,11 +113,6 @@ export function PortfolioChatbot() {
 
           {isLoading && (
             <ChatBubble variant="received">
-              <ChatBubbleAvatar
-                className="h-8 w-8 shrink-0"
-                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=64&h=64&q=80&crop=faces&fit=crop"
-                fallback="AI"
-              />
               <ChatBubbleMessage isLoading />
             </ChatBubble>
           )}
