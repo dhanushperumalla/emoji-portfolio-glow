@@ -16,43 +16,52 @@ const Projects = () => {
       live: "#"
     },
     {
-      title: "Task Management App",
-      description: "Collaborative task management application with real-time updates and team collaboration features.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-      tags: ["Vue.js", "Firebase", "Tailwind"],
-      github: "#",
+      title: "Log Classification",
+      description: "AI-powered log classification system combining regex, machine learning, and LLMs for efficient and accurate log analysis.",
+      image: "/Log Classification.png",
+      tags: ["Logistic Regression", "Sentence Transformers", "Node.JS","React.JS"],
+      github: "https://github.com/dhanushperumalla/LogClassification",
       live: "#"
     },
     {
-      title: "AI Chat Interface",
-      description: "Modern chat interface with AI integration, featuring real-time messaging and smart responses.",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
-      tags: ["Next.js", "OpenAI", "WebSocket"],
-      github: "#",
+      title: "Fraud Suraksha",
+      description: "An AI-powered fraud detection assistant built using the Agentic RAG approach with Google’s Gemini, offering context-aware risk assessment for messages, people, and situations.",
+      image: "/Fraud Suraksha.png",
+      tags: ["Python", "Streamlit", "Langchain","Agentic Rag"],
+      github: "https://github.com/dhanushperumalla/Fraud-Suraksha",
       live: "#"
     },
     {
-      title: "Portfolio Website",
-      description: "Responsive portfolio website with smooth animations and modern design principles.",
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-      tags: ["React", "Tailwind", "Framer Motion"],
-      github: "#",
+      title: "AI Social Media Post Generator",
+      description: "Built a modern AI-powered web app using Next.js and Nebius AI to generate social media posts across platforms with support for custom tones, responsive UI, and post management features.",
+      image: "/PostGenrator.png",
+      tags: ["Next.js", "Nebius AI", "Hugging Face","TypeScript","Shadcn/ui"],
+      github: "https://github.com/dhanushperumalla/AI-Post-Generator",
+      live: "https://ai-post-generator-ecru.vercel.app/"
+
+    },
+    {
+      title: "Student Marks Predection",
+      description: "Developed a Flask-based Student Exam Performance Predictor using ML algorithms and text vectorization techniques (Bag of Words, TF-IDF), achieving 80% accuracy in forecasting student scores through real-time inputs.",
+      image: "/students marks predection.png",
+      tags: ["Python", "Flask", "TF-IDF"],
+      github: "https://github.com/dhanushperumalla/ML-Project",
       live: "#"
     },
     {
-      title: "Analytics Dashboard",
-      description: "Data visualization dashboard with interactive charts and real-time analytics.",
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&h=400&fit=crop",
-      tags: ["React", "D3.js", "Node.js"],
-      github: "#",
+      title: "Sketch-Solve",
+      description: "Sketch-Solve is a real-time hand gesture recognition system that interprets mathematical equations drawn in the air using OpenCV, providing instant AI-powered feedback and solutions.",
+      image: "/Sketch Solve.png",
+      tags: ["Python", "OpenCV", "LangChain"],
+      github: "https://github.com/dhanushperumalla/Sketch-Solve",
       live: "#"
     },
     {
-      title: "Mobile Banking App",
-      description: "Secure mobile banking interface with modern UI/UX and advanced security features.",
-      image: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=600&h=400&fit=crop",
-      tags: ["React Native", "Redux", "API"],
-      github: "#",
+      title: "IPL Win Predection",
+      description: "Built an IPL Win Probability Predictor using Logistic Regression and Streamlit, delivering real-time match outcome predictions based on historical data (2008–2019) and current match parameters like teams, score, and overs.",
+      image: "/IPL WIn Predictor.png",
+      tags: ["Python", "Streamlit", "Logistic Regression"],
+      github: "https://github.com/dhanushperumalla/IPL-Win-Probability-Predictor",
       live: "#"
     }
   ];
