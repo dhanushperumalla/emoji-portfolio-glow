@@ -36,31 +36,20 @@ const Skills = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
-          {/* Skills List - Left Side */}
-          <div className="space-y-6">
-            {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="bg-card border border-border rounded-xl p-4 card-hover animate-slide-in-left"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-2xl">{skill.emoji}</span>
-                    <h3 className="text-lg font-semibold">{skill.name}</h3>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-24 bg-muted rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-sm text-muted-foreground min-w-[3rem]">{skill.level}%</span>
-                  </div>
+          {/* Skills Grid - Left Side */}
+          <div className="animate-slide-in-left">
+            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
+              {skills.map((skill, index) => (
+                <div
+                  key={skill.name}
+                  className="bg-card border border-border rounded-lg p-6 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="text-3xl mb-2">{skill.emoji}</div>
+                  <h3 className="text-sm font-medium text-center">{skill.name}</h3>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Icon Cloud - Right Side */}
