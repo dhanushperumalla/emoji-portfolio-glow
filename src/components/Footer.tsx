@@ -43,7 +43,7 @@ const Footer = () => {
               <li><span className="text-muted-foreground">Web Development</span></li>
               <li><span className="text-muted-foreground">Workflow Automation</span></li>
               <li><span className="text-muted-foreground">Agentic AI Solutions</span></li>
-              <li><span className="text-muted-foreground">Machine Learnning</span></li>
+              <li><span className="text-muted-foreground">Machine Learning</span></li>
             </ul>
           </div>
         </div>

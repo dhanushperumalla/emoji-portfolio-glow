@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
-import { InteractiveMenu, InteractiveMenuItem } from "@/components/ui/modern-mobile-menu";
-import { Home, User, Briefcase, FileText } from 'lucide-react';
+import { Home, User, Briefcase, FileText, Menu, X } from 'lucide-react';
 
 const MobileNavigation = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -53,59 +52,57 @@ const MobileNavigation = () => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setMenuOpen(false);
     }
   };
 
-  const portfolioMenuItems: InteractiveMenuItem[] = [
-    { 
-      label: 'Home', 
-      icon: ({ className }) => (
-        <Home 
-          className={className} 
-          onClick={() => scrollToSection('home')}
-        />
-      )
-    },
-    { 
-      label: 'Skills', 
-      icon: ({ className }) => (
-        <User 
-          className={className} 
-          onClick={() => scrollToSection('skills')}
-        />
-      )
-    },
-    { 
-      label: 'Projects', 
-      icon: ({ className }) => (
-        <Briefcase 
-          className={className} 
-          onClick={() => scrollToSection('projects')}
-        />
-      )
-    },
-    { 
-      label: 'Contact', 
-      icon: ({ className }) => (
-        <FileText 
-          className={className} 
-          onClick={() => scrollToSection('contact')}
-        />
-      )
-    },
+  const navItems = [
+    { label: 'Home', icon: Home, section: 'home' },
+    { label: 'Skills', icon: User, section: 'skills' },
+    { label: 'Projects', icon: Briefcase, section: 'projects' },
+    { label: 'Contact', icon: FileText, section: 'contact' },
   ];
 
-  if (!isMobile) {
-    return null;
-  }
+  if (!isMobile) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border p-4 md:hidden">
-      <InteractiveMenu 
-        items={portfolioMenuItems} 
-        accentColor="var(--primary)" 
-      />
-    </div>
+    <>
+      {/* Hamburger Icon */}
+      <button
+        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-card border border-border shadow-md md:hidden"
+        onClick={() => setMenuOpen(true)}
+        aria-label="Open navigation menu"
+        style={{ display: menuOpen ? 'none' : 'block' }}
+      >
+        <Menu size={28} />
+      </button>
+      {/* Overlay and Drawer */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/40 md:hidden">
+          <div className="bg-card w-64 h-full shadow-lg p-6 flex flex-col relative animate-slide-in-right">
+            <button
+              className="absolute top-4 right-4 p-1 rounded-full hover:bg-muted"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close navigation menu"
+            >
+              <X size={24} />
+            </button>
+            <nav className="mt-12 flex flex-col gap-6">
+              {navItems.map(({ label, icon: Icon, section }) => (
+                <button
+                  key={section}
+                  className={`flex items-center gap-3 text-lg font-medium px-2 py-2 rounded-md transition-colors ${activeSection === section ? 'bg-primary/10 text-primary' : 'hover:bg-muted'}`}
+                  onClick={() => scrollToSection(section)}
+                >
+                  <Icon className="w-6 h-6" />
+                  {label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

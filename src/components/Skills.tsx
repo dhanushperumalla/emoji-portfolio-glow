@@ -13,18 +13,21 @@ const Skills = () => {
     { name: "Express", emoji: "🚀", level: 80, slug: "express" },
     { name: "N8N", emoji: "⚡", level: 80, slug: "n8n" },
     { name: "LangChain", emoji: "🦜", level: 80, slug: "langchain" },
-    { name: "CrewAI", emoji: "🚣", level: 80, slug: "crewai" },
+    { name: "CrewAI", emoji: "🚣", level: 80, slug: "" },
     { name: "PostgreSQL", emoji: "🐘", level: 75, slug: "postgresql" },
     { name: "MY-SQL", emoji: "🐟", level: 75, slug: "mysql" },
     { name: "MongoDB", emoji: "☘️", level: 75, slug: "mongodb" },
-    { name: "AWS", emoji: "☁️", level: 70, slug: "amazonaws" },
+    { name: "AWS", emoji: "☁️", level: 70, slug: "amazon" },
     { name: "Docker", emoji: "🐳", level: 75, slug: "docker" },
     { name: "Git", emoji: "📋", level: 90, slug: "git" },
     { name: "GitHub", emoji: "🐙", level: 90, slug: "github" },
-    { name: "VS Code", emoji: "💻", level: 95, slug: "visualstudiocode" },
+    { name: "VS Code", emoji: "💻", level: 95, slug: "" },
   ];
 
-  const iconSlugs = skills.map(skill => skill.slug);
+  const iconSlugs = skills
+  .map(skill => skill.slug)
+  .filter(slug => slug !== "");
+
 
   return (
     <section id="skills" className="py-20 bg-secondary/20">
