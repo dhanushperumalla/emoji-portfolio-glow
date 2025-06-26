@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -8,6 +7,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { useForm, ValidationError } from '@formspree/react';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -120,6 +120,10 @@ function Separator({
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export default function FormLayout01() {
+  const [state, handleSubmit] = useForm("mjkrpjnv");
+  if (state.succeeded) {
+    return <p className="text-green-500 text-center text-xl py-10">Thanks for reaching out! I'll get back to you soon.</p>;
+  }
   return (
     <div className="flex items-center justify-center p-10">
       <div className="sm:mx-auto sm:max-w-2xl">
@@ -129,7 +133,7 @@ export default function FormLayout01() {
         <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">
           Ready to start your next project? Let's work together to create something amazing!
         </p>
-        <form action="#" method="post" className="mt-8">
+        <form onSubmit={handleSubmit} className="mt-8">
           <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
             <div className="col-span-full sm:col-span-3">
               <Label
@@ -184,6 +188,7 @@ export default function FormLayout01() {
                 className="mt-2"
                 required
               />
+              <ValidationError prefix="Email" field="email" errors={state.errors} />
             </div>
             <div className="col-span-full">
               <Label
@@ -198,24 +203,13 @@ export default function FormLayout01() {
                 name="message"
                 rows={4}
                 placeholder="Tell me about your project..."
-                className="mt-2 file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none resize-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                className="mt-2 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
                 required
               />
+              <ValidationError prefix="Message" field="message" errors={state.errors} />
             </div>
           </div>
-          <Separator className="my-6" />
-          <div className="flex items-center justify-end space-x-4">
-            <Button
-              type="button"
-              variant="outline"
-              className="whitespace-nowrap"
-            >
-              Cancel
-            </Button>
-            <Button type="submit" className="whitespace-nowrap">
-              Send Message
-            </Button>
-          </div>
+          <Button type="submit" className="mt-6 w-full" disabled={state.submitting}>Send Message</Button>
         </form>
       </div>
     </div>
