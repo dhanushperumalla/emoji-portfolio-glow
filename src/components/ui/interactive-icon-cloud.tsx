@@ -63,7 +63,17 @@ type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
 const Cloud = lazy(() => import("react-icon-cloud").then(mod => ({ default: mod.Cloud })));
 
+// Utility to check if running in browser
+function useIsClient() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  return isClient;
+}
+
 export function IconCloud({ iconSlugs }: DynamicCloudProps) {
+  const isClient = useIsClient();
   const [data, setData] = useState<IconData | null>(null)
 
   // Simple theme detection: check if 'dark' class is on <html>
@@ -91,6 +101,10 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
       renderCustomIcon(icon, theme || "light"),
     )
   }, [data, theme])
+
+  if (!isClient) {
+    return <div style={{height: 200}}></div>;
+  }
 
   return (
     <Suspense fallback={<div style={{height: 200}}></div>}>
