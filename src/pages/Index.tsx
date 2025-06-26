@@ -19,7 +19,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <NavBar items={navItems} />
+      <div className="hidden md:block">
+        <NavBar items={navItems} />
+      </div>
       <main>
         <section id="home">
           <Hero />

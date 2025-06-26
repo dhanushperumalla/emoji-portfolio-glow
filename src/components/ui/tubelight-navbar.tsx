@@ -20,17 +20,6 @@ interface NavBarProps {
 
 export function NavBar({ items, className, onItemClick }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
 
   // Intersection Observer for scroll-based active state
   useEffect(() => {
@@ -54,8 +43,8 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         })
       },
       {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '-20% 0px -20% 0px' // Adjust the trigger area
+        threshold: 0.3,
+        rootMargin: '-20% 0px -20% 0px'
       }
     )
 
@@ -86,7 +75,7 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6 pointer-events-none",
+        "fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-6 pointer-events-none",
         className,
       )}
     >
@@ -105,10 +94,7 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
                 isActive && "bg-muted text-primary",
               )}
             >
-              <span className="hidden md:inline">{item.name}</span>
-              <span className="md:hidden">
-                <Icon size={18} strokeWidth={2.5} />
-              </span>
+              <span className="inline">{item.name}</span>
               {isActive && (
                 <motion.div
                   layoutId="lamp"
