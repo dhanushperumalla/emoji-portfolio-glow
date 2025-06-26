@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, lazy, Suspense } from "react"
 import {
-  Cloud,
   fetchSimpleIcons,
   ICloud,
   renderSimpleIcon,
@@ -62,6 +61,8 @@ export type DynamicCloudProps = {
 
 type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
+const Cloud = lazy(() => import("react-icon-cloud").then(mod => ({ default: mod.Cloud })));
+
 export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null)
 
@@ -92,9 +93,11 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   }, [data, theme])
 
   return (
-    // @ts-ignore
-    <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
-    </Cloud>
+    <Suspense fallback={<div style={{height: 200}}></div>}>
+      {/* @ts-ignore */}
+      <Cloud {...cloudProps}>
+        <>{renderedIcons}</>
+      </Cloud>
+    </Suspense>
   )
 }
