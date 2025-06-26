@@ -25,41 +25,64 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
   useEffect(() => {
     const sections = items.map(item => {
       const sectionId = item.url.replace('#', '')
-      return document.getElementById(sectionId)
-    }).filter(Boolean)
+      return {
+        element: document.getElementById(sectionId),
+        name: item.name,
+        id: sectionId
+      }
+    }).filter(section => section.element !== null)
 
-    if (sections.length === 0) return
+    console.log('Found sections:', sections.map(s => s.id))
+
+    if (sections.length === 0) {
+      console.log('No sections found for navigation')
+      return
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Find the entry with the highest intersection ratio
+        let maxRatio = 0
+        let activeSection = null
+
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.id
-            const matchingItem = items.find(item => item.url === `#${sectionId}`)
-            if (matchingItem) {
-              setActiveTab(matchingItem.name)
-            }
+          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+            maxRatio = entry.intersectionRatio
+            activeSection = entry.target.id
           }
         })
+
+        if (activeSection) {
+          const matchingItem = items.find(item => item.url === `#${activeSection}`)
+          if (matchingItem) {
+            console.log('Setting active section to:', matchingItem.name)
+            setActiveTab(matchingItem.name)
+          }
+        }
       },
       {
-        threshold: 0.3,
-        rootMargin: '-20% 0px -20% 0px'
+        threshold: [0.1, 0.3, 0.5, 0.7], // Multiple thresholds for better detection
+        rootMargin: '-10% 0px -10% 0px' // Less restrictive margin
       }
     )
 
     sections.forEach(section => {
-      if (section) observer.observe(section)
+      if (section.element) {
+        observer.observe(section.element)
+      }
     })
 
     return () => {
       sections.forEach(section => {
-        if (section) observer.unobserve(section)
+        if (section.element) {
+          observer.unobserve(section.element)
+        }
       })
     }
   }, [items])
 
   const handleItemClick = (item: NavItem) => {
+    console.log('Navigation clicked:', item.name)
     setActiveTab(item.name)
     if (onItemClick) {
       onItemClick(item.url)
