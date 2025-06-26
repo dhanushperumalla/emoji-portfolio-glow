@@ -1,7 +1,8 @@
+
 "use client"
 
 import { useState, FormEvent } from "react"
-import { Send, Bot, Paperclip, Mic, CornerDownLeft } from "lucide-react"
+import { Send, Bot, CornerDownLeft } from "lucide-react"
 import { aiService } from "@/services/ai-service"
 import { Button } from "@/components/ui/button"
 import {
@@ -75,14 +76,6 @@ export function PortfolioChatbot() {
     }
   }
 
-  const handleAttachFile = () => {
-    // File attachment functionality would go here
-  }
-
-  const handleMicrophoneClick = () => {
-    // Voice input functionality would go here
-  }
-
   return (
     <ExpandableChat
       size="lg"
@@ -130,26 +123,7 @@ export function PortfolioChatbot() {
             placeholder="Ask about Dhanush's projects, skills, or experience..."
             className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
           />
-          <div className="flex items-center p-3 pt-0 justify-between">
-            <div className="flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                type="button"
-                onClick={handleAttachFile}
-              >
-                <Paperclip className="size-4" />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                type="button"
-                onClick={handleMicrophoneClick}
-              >
-                <Mic className="size-4" />
-              </Button>
-            </div>
+          <div className="flex items-center p-3 pt-0 justify-end">
             <Button type="submit" size="sm" className="ml-auto gap-1.5">
               Send Message
               <CornerDownLeft className="size-3.5" />
