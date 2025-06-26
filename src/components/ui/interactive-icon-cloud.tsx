@@ -1,8 +1,6 @@
-
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { useTheme } from "next-themes"
 import {
   Cloud,
   fetchSimpleIcons,
@@ -66,15 +64,28 @@ type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
 export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null)
-  const { theme } = useTheme()
+
+  // Simple theme detection: check if 'dark' class is on <html>
+  const getTheme = () => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    return 'light';
+  };
+  const [theme, setTheme] = useState(getTheme());
 
   useEffect(() => {
     fetchSimpleIcons({ slugs: iconSlugs }).then(setData)
-  }, [iconSlugs])
+    // Listen for theme changes
+    const observer = new MutationObserver(() => {
+      setTheme(getTheme());
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, [iconSlugs]);
 
   const renderedIcons = useMemo(() => {
     if (!data) return null
-
     return Object.values(data.simpleIcons).map((icon) =>
       renderCustomIcon(icon, theme || "light"),
     )
