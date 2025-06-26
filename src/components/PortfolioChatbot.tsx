@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, FormEvent } from "react"
@@ -115,20 +114,17 @@ export function PortfolioChatbot() {
       <ExpandableChatFooter>
         <form
           onSubmit={handleSubmit}
-          className="relative rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring p-1"
+          className="flex items-center gap-2 p-1"
         >
           <ChatInput
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about Dhanush's projects, skills, or experience..."
-            className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
+            className="flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring"
           />
-          <div className="flex items-center p-3 pt-0 justify-end">
-            <Button type="submit" size="sm" className="ml-auto gap-1.5">
-              Send Message
-              <CornerDownLeft className="size-3.5" />
-            </Button>
-          </div>
+          <Button type="submit" size="icon" className="shrink-0">
+            <Send className="h-4 w-4" />
+          </Button>
         </form>
       </ExpandableChatFooter>
     </ExpandableChat>
