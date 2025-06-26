@@ -8,6 +8,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useForm, ValidationError } from '@formspree/react';
+import { useState } from 'react';
+import { Toaster, toast } from 'sonner';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -121,12 +123,15 @@ Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export default function FormLayout01() {
   const [state, handleSubmit] = useForm("mjkrpjnv");
-  if (state.succeeded) {
-    return <p className="text-green-500 text-center text-xl py-10">Thanks for reaching out! I'll get back to you soon.</p>;
+  const [showedToast, setShowedToast] = useState(false);
+  if (state.succeeded && !showedToast) {
+    toast.success("Thanks for reaching out! I'll get back to you soon.");
+    setShowedToast(true);
   }
   return (
     <div className="flex items-center justify-center p-10">
       <div className="sm:mx-auto sm:max-w-2xl">
+        <Toaster position="top-center" richColors />
         <h3 className="text-2xl font-semibold text-foreground dark:text-foreground">
           Get In Touch
         </h3>
