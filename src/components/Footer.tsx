@@ -1,4 +1,3 @@
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
@@ -7,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">Perumalla Venkata Naga Dhanush</h3>
+            <h3 className="text-2xl font-bold mb-4 gradient-text"><a href="/" className="hover:underline focus:underline outline-none">Perumalla Venkata Naga Dhanush</a></h3>
             <p className="text-muted-foreground mb-4 max-w-md">
               Full-Stack & AI Developer passionate about creating innovative solutions with AI.
             </p>

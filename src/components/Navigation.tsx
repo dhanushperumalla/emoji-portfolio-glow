@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -28,7 +27,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="text-xl font-bold gradient-text">
-            Perumalla Venkata Naga Dhanush
+            <a href="/" className="hover:underline focus:underline outline-none">Perumalla Venkata Naga Dhanush</a>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
