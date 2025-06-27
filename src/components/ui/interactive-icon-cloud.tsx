@@ -107,7 +107,7 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const renderedIcons = useMemo(() => {
     if (!data || !data.simpleIcons) {
       console.log('No icon data available yet')
-      return null
+      return []
     }
     
     console.log('Rendering icons with theme:', theme)
@@ -127,7 +127,7 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
     )
   }
 
-  if (!data || !renderedIcons) {
+  if (!data || renderedIcons.length === 0) {
     console.log('Data not loaded yet, showing loading state')
     return (
       <div className="flex items-center justify-center w-full h-[300px]">
@@ -140,7 +140,7 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   
   return (
     <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
+      {renderedIcons}
     </Cloud>
   )
 }
