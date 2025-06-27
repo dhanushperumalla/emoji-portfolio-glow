@@ -65,6 +65,8 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null)
   const [isClient, setIsClient] = useState(false)
   const [theme, setTheme] = useState('dark')
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setIsClient(true)
@@ -72,15 +74,30 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
     
     // Fetch icons
     if (iconSlugs && iconSlugs.length > 0) {
-      console.log('Fetching icons for slugs:', iconSlugs)
+      console.log('Starting to fetch icons for slugs:', iconSlugs)
+      setIsLoading(true)
+      setError(null)
+      
       fetchSimpleIcons({ slugs: iconSlugs })
         .then((iconData) => {
           console.log('Icons fetched successfully:', iconData)
+          console.log('Number of icons received:', Object.keys(iconData.simpleIcons || {}).length)
           setData(iconData)
+          setIsLoading(false)
         })
         .catch((error) => {
           console.error('Error fetching icons:', error)
+          console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+          })
+          setError(`Failed to fetch icons: ${error.message}`)
+          setIsLoading(false)
         })
+    } else {
+      console.warn('No iconSlugs provided or empty array')
+      setIsLoading(false)
     }
 
     // Set initial theme
@@ -111,15 +128,24 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
     }
     
     console.log('Rendering icons with theme:', theme)
-    const icons = Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme)
-    )
-    console.log('Rendered icons count:', icons.length)
-    return icons
+    console.log('Available icons:', Object.keys(data.simpleIcons))
+    
+    try {
+      const icons = Object.values(data.simpleIcons).map((icon) =>
+        renderCustomIcon(icon, theme)
+      )
+      console.log('Successfully rendered icons count:', icons.length)
+      return icons
+    } catch (error) {
+      console.error('Error rendering icons:', error)
+      setError(`Failed to render icons: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      return []
+    }
   }, [data, theme])
 
-  if (!isClient) {
-    console.log('Not client side yet, showing placeholder')
+  // Show loading state while not on client or while loading
+  if (!isClient || isLoading) {
+    console.log('Showing loading state - isClient:', isClient, 'isLoading:', isLoading)
     return (
       <div className="flex items-center justify-center w-full h-[300px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -127,11 +153,30 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
     )
   }
 
-  if (!data || renderedIcons.length === 0) {
-    console.log('Data not loaded yet, showing loading state')
+  // Show error state
+  if (error) {
+    console.log('Showing error state:', error)
     return (
-      <div className="flex items-center justify-center w-full h-[300px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="flex flex-col items-center justify-center w-full h-[300px] p-4">
+        <div className="text-red-500 mb-2">⚠️ Error loading icons</div>
+        <div className="text-sm text-muted-foreground text-center">{error}</div>
+        <div className="text-xs text-muted-foreground mt-2">Check console for details</div>
+      </div>
+    )
+  }
+
+  // Show fallback if no icons rendered
+  if (!data || renderedIcons.length === 0) {
+    console.log('No data or no rendered icons - showing fallback')
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-[300px] p-4">
+        <div className="text-muted-foreground mb-2">🎯 Skills Visualization</div>
+        <div className="text-sm text-muted-foreground text-center">
+          Interactive icon cloud loading...
+        </div>
+        <div className="text-xs text-muted-foreground mt-2">
+          Expected icons: {iconSlugs.length}
+        </div>
       </div>
     )
   }
