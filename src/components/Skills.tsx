@@ -1,33 +1,30 @@
-import { IconCloud } from "@/components/ui/interactive-icon-cloud";
+
+import { OrbitingCircles } from "@/components/ui/orbiting-circles";
+import { Github, Code, Database, Cloud, GitBranch, Monitor } from "lucide-react";
 
 const Skills = () => {
   const skills = [
-    { name: "React", emoji: "⚛️", level: 95, slug: "react" },
-    { name: "TypeScript", emoji: "📘", level: 90, slug: "typescript" },
-    { name: "Node.js", emoji: "🟢", level: 85, slug: "nodedotjs" },
-    { name: "Python", emoji: "🐍", level: 88, slug: "python" },
-    { name: "JavaScript", emoji: "🟨", level: 92, slug: "javascript" },
-    { name: "HTML5", emoji: "🧡", level: 95, slug: "html5" },
-    { name: "CSS3", emoji: "💙", level: 90, slug: "css3" },
-    { name: "Next.js", emoji: "▲", level: 85, slug: "nextdotjs" },
-    { name: "Express", emoji: "🚀", level: 80, slug: "express" },
-    { name: "N8N", emoji: "⚡", level: 80, slug: "n8n" },
-    { name: "LangChain", emoji: "🦜", level: 80, slug: "langchain" },
-    { name: "CrewAI", emoji: "🚣", level: 80, slug: "" },
-    { name: "PostgreSQL", emoji: "🐘", level: 75, slug: "postgresql" },
-    { name: "MY-SQL", emoji: "🐟", level: 75, slug: "mysql" },
-    { name: "MongoDB", emoji: "☘️", level: 75, slug: "mongodb" },
-    { name: "AWS", emoji: "☁️", level: 70, slug: "amazon" },
-    { name: "Docker", emoji: "🐳", level: 75, slug: "docker" },
-    { name: "Git", emoji: "📋", level: 90, slug: "git" },
-    { name: "GitHub", emoji: "🐙", level: 90, slug: "github" },
-    { name: "VS Code", emoji: "💻", level: 95, slug: "" },
+    { name: "React", emoji: "⚛️", level: 95 },
+    { name: "TypeScript", emoji: "📘", level: 90 },
+    { name: "Node.js", emoji: "🟢", level: 85 },
+    { name: "Python", emoji: "🐍", level: 88 },
+    { name: "JavaScript", emoji: "🟨", level: 92 },
+    { name: "HTML5", emoji: "🧡", level: 95 },
+    { name: "CSS3", emoji: "💙", level: 90 },
+    { name: "Next.js", emoji: "▲", level: 85 },
+    { name: "Express", emoji: "🚀", level: 80 },
+    { name: "N8N", emoji: "⚡", level: 80 },
+    { name: "LangChain", emoji: "🦜", level: 80 },
+    { name: "CrewAI", emoji: "🚣", level: 80 },
+    { name: "PostgreSQL", emoji: "🐘", level: 75 },
+    { name: "MY-SQL", emoji: "🐟", level: 75 },
+    { name: "MongoDB", emoji: "☘️", level: 75 },
+    { name: "AWS", emoji: "☁️", level: 70 },
+    { name: "Docker", emoji: "🐳", level: 75 },
+    { name: "Git", emoji: "📋", level: 90 },
+    { name: "GitHub", emoji: "🐙", level: 90 },
+    { name: "VS Code", emoji: "💻", level: 95 },
   ];
-
-  const iconSlugs = skills
-  .map(skill => skill.slug)
-  .filter(slug => slug !== "");
-
 
   return (
     <section id="skills" className="py-20 bg-secondary/20">
@@ -58,10 +55,67 @@ const Skills = () => {
             </div>
           </div>
 
-          {/* Icon Cloud - Right Side */}
+          {/* Orbiting Circles - Right Side */}
           <div className="flex justify-center animate-slide-in-right">
-            <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-card px-8 pb-8 pt-4">
-              <IconCloud iconSlugs={iconSlugs} />
+            <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-card px-8 pb-8 pt-4 h-[400px]">
+              <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-center text-4xl font-semibold leading-none text-transparent">
+                Skills
+              </span>
+
+              {/* Inner Circles */}
+              <OrbitingCircles
+                className="size-[40px] border-none bg-transparent"
+                duration={20}
+                delay={20}
+                radius={80}
+              >
+                <Code className="size-6 text-blue-500" />
+              </OrbitingCircles>
+              <OrbitingCircles
+                className="size-[40px] border-none bg-transparent"
+                duration={20}
+                delay={10}
+                radius={80}
+              >
+                <Database className="size-6 text-green-500" />
+              </OrbitingCircles>
+
+              {/* Middle Circles */}
+              <OrbitingCircles
+                className="size-[45px] border-none bg-transparent"
+                duration={25}
+                delay={15}
+                radius={130}
+              >
+                <Monitor className="size-7 text-purple-500" />
+              </OrbitingCircles>
+              <OrbitingCircles
+                className="size-[45px] border-none bg-transparent"
+                duration={25}
+                delay={0}
+                radius={130}
+              >
+                <Cloud className="size-7 text-orange-500" />
+              </OrbitingCircles>
+
+              {/* Outer Circles (reverse) */}
+              <OrbitingCircles
+                className="size-[50px] border-none bg-transparent"
+                radius={180}
+                duration={30}
+                reverse
+              >
+                <Github className="size-8 text-gray-700 dark:text-gray-300" />
+              </OrbitingCircles>
+              <OrbitingCircles
+                className="size-[50px] border-none bg-transparent"
+                radius={180}
+                duration={30}
+                delay={20}
+                reverse
+              >
+                <GitBranch className="size-8 text-red-500" />
+              </OrbitingCircles>
             </div>
           </div>
         </div>
