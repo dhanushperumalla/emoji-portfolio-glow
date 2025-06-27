@@ -19,4 +19,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress eval warnings from react-icon-cloud
+        if (warning.code === 'EVAL' && warning.id?.includes('react-icon-cloud')) {
+          return;
+        }
+        warn(warning);
+      },
+    },
+  },
 }));

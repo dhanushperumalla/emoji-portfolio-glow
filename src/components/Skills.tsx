@@ -1,4 +1,3 @@
-import { IconCloud } from "@/components/ui/interactive-icon-cloud";
 
 const Skills = () => {
   const skills = [
@@ -41,10 +40,10 @@ const Skills = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
-          {/* Skills Grid - Left Side */}
-          <div className="animate-slide-in-left">
-            <div className="grid grid-cols-4 gap-3 max-w-md mx-auto lg:mx-0">
+        <div className="max-w-6xl mx-auto">
+          {/* Skills Grid - Single Column */}
+          <div className="animate-slide-in-up">
+            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 max-w-5xl mx-auto">
               {skills.slice(0, 20).map((skill, index) => (
                 <div
                   key={skill.name}
@@ -55,13 +54,6 @@ const Skills = () => {
                   <h3 className="text-xs font-medium text-center">{skill.name}</h3>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Icon Cloud - Right Side */}
-          <div className="flex justify-center animate-slide-in-right">
-            <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-card px-8 pb-8 pt-4">
-              <IconCloud iconSlugs={iconSlugs} />
             </div>
           </div>
         </div>
