@@ -123,17 +123,7 @@ export default {
 					'50%': {
 						transform: 'translateY(-10px)'
 					}
-				},
-				orbit: {
-					"0%": {
-						transform:
-							"rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
-					},
-					"100%": {
-						transform:
-							"rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
-					},
-				},
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -141,8 +131,7 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-in-left': 'slide-in-left 0.6s ease-out',
 				'slide-in-right': 'slide-in-right 0.6s ease-out',
-				'float': 'float 3s ease-in-out infinite',
-				orbit: "orbit calc(var(--duration)*1s) linear infinite",
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},
