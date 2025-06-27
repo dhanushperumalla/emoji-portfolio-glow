@@ -41,28 +41,27 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the entry with the highest intersection ratio
-        let maxRatio = 0
-        let activeSection = null
+        // Only process entries that are intersecting
+        const intersectingEntries = entries.filter(entry => entry.isIntersecting)
+        
+        if (intersectingEntries.length === 0) return
 
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-            maxRatio = entry.intersectionRatio
-            activeSection = entry.target.id
-          }
+        // Find the entry with the highest intersection ratio among intersecting entries
+        const topEntry = intersectingEntries.reduce((prev, current) => {
+          return current.intersectionRatio > prev.intersectionRatio ? current : prev
         })
 
-        if (activeSection) {
-          const matchingItem = items.find(item => item.url === `#${activeSection}`)
-          if (matchingItem) {
-            console.log('Setting active section to:', matchingItem.name)
-            setActiveTab(matchingItem.name)
-          }
+        const activeSection = topEntry.target.id
+        const matchingItem = items.find(item => item.url === `#${activeSection}`)
+        
+        if (matchingItem && matchingItem.name !== activeTab) {
+          console.log('Setting active section to:', matchingItem.name)
+          setActiveTab(matchingItem.name)
         }
       },
       {
-        threshold: [0.1, 0.3, 0.5, 0.7], // Multiple thresholds for better detection
-        rootMargin: '-10% 0px -10% 0px' // Less restrictive margin
+        threshold: [0.2, 0.5, 0.8], // More conservative thresholds
+        rootMargin: '-100px 0px -100px 0px' // More restrictive margin to prevent rapid switching
       }
     )
 
@@ -79,7 +78,7 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         }
       })
     }
-  }, [items])
+  }, [items, activeTab])
 
   const handleItemClick = (item: NavItem) => {
     console.log('Navigation clicked:', item.name)
