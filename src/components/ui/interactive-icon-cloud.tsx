@@ -1,15 +1,14 @@
-
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, lazy, Suspense } from "react"
 import {
   fetchSimpleIcons,
-  Cloud,
+  ICloud,
   renderSimpleIcon,
   SimpleIcon,
 } from "react-icon-cloud"
 
-export const cloudProps: Omit<any, "children"> = {
+export const cloudProps: Omit<ICloud, "children"> = {
   containerProps: {
     style: {
       display: "flex",
@@ -32,6 +31,7 @@ export const cloudProps: Omit<any, "children"> = {
     outlineColour: "#0000",
     maxSpeed: 0.04,
     minSpeed: 0.02,
+    // dragControl: false,
   },
 }
 
@@ -61,86 +61,57 @@ export type DynamicCloudProps = {
 
 type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
+const Cloud = lazy(() => import("react-icon-cloud").then(mod => ({ default: mod.Cloud })));
+
+// Utility to check if running in browser
+function useIsClient() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  return isClient;
+}
+
 export function IconCloud({ iconSlugs }: DynamicCloudProps) {
+  const isClient = useIsClient();
   const [data, setData] = useState<IconData | null>(null)
-  const [isClient, setIsClient] = useState(false)
-  const [theme, setTheme] = useState('dark')
+
+  // Simple theme detection: check if 'dark' class is on <html>
+  const getTheme = () => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    return 'light';
+  };
+  const [theme, setTheme] = useState(getTheme());
 
   useEffect(() => {
-    setIsClient(true)
-    console.log('IconCloud component mounted with iconSlugs:', iconSlugs)
-    
-    // Fetch icons
-    if (iconSlugs && iconSlugs.length > 0) {
-      console.log('Fetching icons for slugs:', iconSlugs)
-      fetchSimpleIcons({ slugs: iconSlugs })
-        .then((iconData) => {
-          console.log('Icons fetched successfully:', iconData)
-          setData(iconData)
-        })
-        .catch((error) => {
-          console.error('Error fetching icons:', error)
-        })
-    }
-
-    // Set initial theme
-    const getTheme = () => {
-      if (typeof document !== 'undefined') {
-        return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-      }
-      return 'dark';
-    };
-    setTheme(getTheme())
-
+    fetchSimpleIcons({ slugs: iconSlugs }).then(setData)
     // Listen for theme changes
     const observer = new MutationObserver(() => {
       setTheme(getTheme());
     });
-    
-    if (typeof document !== 'undefined') {
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    }
-    
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     return () => observer.disconnect();
   }, [iconSlugs]);
 
   const renderedIcons = useMemo(() => {
-    if (!data || !data.simpleIcons) {
-      console.log('No icon data available yet')
-      return null
-    }
-    
-    console.log('Rendering icons with theme:', theme)
-    const icons = Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme)
+    if (!data) return null
+    return Object.values(data.simpleIcons).map((icon) =>
+      renderCustomIcon(icon, theme || "light"),
     )
-    console.log('Rendered icons count:', icons.length)
-    return icons
   }, [data, theme])
 
   if (!isClient) {
-    console.log('Not client side yet, showing placeholder')
-    return (
-      <div className="flex items-center justify-center w-full h-[300px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    )
+    return <div style={{height: 200}}></div>;
   }
 
-  if (!data || !renderedIcons) {
-    console.log('Data not loaded yet, showing loading state')
-    return (
-      <div className="flex items-center justify-center w-full h-[300px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    )
-  }
-
-  console.log('Rendering Cloud component with', renderedIcons.length, 'icons')
-  
   return (
-    <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
-    </Cloud>
+    <Suspense fallback={<div style={{height: 200}}></div>}>
+      {/* @ts-ignore */}
+      <Cloud {...cloudProps}>
+        <>{renderedIcons}</>
+      </Cloud>
+    </Suspense>
   )
 }
