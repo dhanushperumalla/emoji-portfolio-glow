@@ -1,4 +1,6 @@
 
+import { Card } from "./ui/card";
+
 const Skills = () => {
   const skillsData = {
     Languages: [
@@ -34,33 +36,40 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-secondary/20">
+    <section id="skills" className="py-16 bg-gradient-to-br from-background to-secondary/10">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-12 animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             My <span className="gradient-text">Skills</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Technologies and tools I work with to bring ideas to life
           </p>
         </div>
         
-        <div className="max-w-6xl mx-auto space-y-12">
+        <div className="max-w-7xl mx-auto space-y-8">
           {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
-            <div key={category} className="animate-slide-in-up" style={{ animationDelay: `${categoryIndex * 0.2}s` }}>
-              <h3 className="text-2xl font-bold text-center mb-8 text-primary">
+            <div key={category} className="animate-slide-in-up" style={{ animationDelay: `${categoryIndex * 0.15}s` }}>
+              <h3 className="text-xl font-semibold text-center mb-6 text-primary">
                 {category}
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 justify-items-center">
                 {skills.map((skill, index) => (
-                  <div
+                  <Card
                     key={skill.name}
-                    className="bg-card border border-border rounded-lg p-4 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
-                    style={{ animationDelay: `${(categoryIndex * 0.2) + (index * 0.1)}s` }}
+                    className="group relative overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/10 w-20 h-20 sm:w-24 sm:h-24 animate-fade-in"
+                    style={{ animationDelay: `${(categoryIndex * 0.15) + (index * 0.05)}s` }}
                   >
-                    <div className="text-3xl mb-2">{skill.emoji}</div>
-                    <h4 className="text-sm font-medium text-center">{skill.name}</h4>
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative flex flex-col items-center justify-center h-full p-2">
+                      <div className="text-2xl sm:text-3xl mb-1 group-hover:scale-110 transition-transform duration-300">
+                        {skill.emoji}
+                      </div>
+                      <h4 className="text-xs font-medium text-center leading-tight opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        {skill.name}
+                      </h4>
+                    </div>
+                  </Card>
                 ))}
               </div>
             </div>
