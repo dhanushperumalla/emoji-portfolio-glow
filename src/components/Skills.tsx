@@ -53,7 +53,7 @@ const Skills = () => {
               <h3 className="text-xl font-semibold text-center mb-6 text-primary">
                 {category}
               </h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 justify-items-center">
+              <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
                 {skills.map((skill, index) => (
                   <Card
                     key={skill.name}
