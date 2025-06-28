@@ -1,32 +1,37 @@
 
 const Skills = () => {
-  const skills = [
-    { name: "React", emoji: "⚛️", level: 95, slug: "react" },
-    { name: "TypeScript", emoji: "📘", level: 90, slug: "typescript" },
-    { name: "Node.js", emoji: "🟢", level: 85, slug: "nodedotjs" },
-    { name: "Python", emoji: "🐍", level: 88, slug: "python" },
-    { name: "JavaScript", emoji: "🟨", level: 92, slug: "javascript" },
-    { name: "HTML5", emoji: "🧡", level: 95, slug: "html5" },
-    { name: "CSS3", emoji: "💙", level: 90, slug: "css3" },
-    { name: "Next.js", emoji: "▲", level: 85, slug: "nextdotjs" },
-    { name: "Express", emoji: "🚀", level: 80, slug: "express" },
-    { name: "N8N", emoji: "⚡", level: 80, slug: "n8n" },
-    { name: "LangChain", emoji: "🦜", level: 80, slug: "langchain" },
-    { name: "CrewAI", emoji: "🚣", level: 80, slug: "" },
-    { name: "PostgreSQL", emoji: "🐘", level: 75, slug: "postgresql" },
-    { name: "MY-SQL", emoji: "🐟", level: 75, slug: "mysql" },
-    { name: "MongoDB", emoji: "☘️", level: 75, slug: "mongodb" },
-    { name: "AWS", emoji: "☁️", level: 70, slug: "amazon" },
-    { name: "Docker", emoji: "🐳", level: 75, slug: "docker" },
-    { name: "Git", emoji: "📋", level: 90, slug: "git" },
-    { name: "GitHub", emoji: "🐙", level: 90, slug: "github" },
-    { name: "VS Code", emoji: "💻", level: 95, slug: "" },
-  ];
-
-  const iconSlugs = skills
-  .map(skill => skill.slug)
-  .filter(slug => slug !== "");
-
+  const skillsData = {
+    Languages: [
+      { name: "JavaScript", emoji: "🟨", level: 92, slug: "javascript" },
+      { name: "TypeScript", emoji: "📘", level: 90, slug: "typescript" },
+      { name: "Python", emoji: "🐍", level: 88, slug: "python" },
+      { name: "HTML5", emoji: "🧡", level: 95, slug: "html5" },
+      { name: "CSS3", emoji: "💙", level: 90, slug: "css3" },
+    ],
+    Frameworks: [
+      { name: "React", emoji: "⚛️", level: 95, slug: "react" },
+      { name: "Next.js", emoji: "▲", level: 85, slug: "nextdotjs" },
+      { name: "Express", emoji: "🚀", level: 80, slug: "express" },
+      { name: "Node.js", emoji: "🟢", level: 85, slug: "nodedotjs" },
+    ],
+    Automations: [
+      { name: "N8N", emoji: "⚡", level: 80, slug: "n8n" },
+      { name: "LangChain", emoji: "🦜", level: 80, slug: "langchain" },
+      { name: "CrewAI", emoji: "🚣", level: 80, slug: "" },
+    ],
+    Databases: [
+      { name: "PostgreSQL", emoji: "🐘", level: 75, slug: "postgresql" },
+      { name: "MY-SQL", emoji: "🐟", level: 75, slug: "mysql" },
+      { name: "MongoDB", emoji: "☘️", level: 75, slug: "mongodb" },
+    ],
+    Tools: [
+      { name: "AWS", emoji: "☁️", level: 70, slug: "amazon" },
+      { name: "Docker", emoji: "🐳", level: 75, slug: "docker" },
+      { name: "Git", emoji: "📋", level: 90, slug: "git" },
+      { name: "GitHub", emoji: "🐙", level: 90, slug: "github" },
+      { name: "VS Code", emoji: "💻", level: 95, slug: "" },
+    ],
+  };
 
   return (
     <section id="skills" className="py-20 bg-secondary/20">
@@ -40,22 +45,36 @@ const Skills = () => {
           </p>
         </div>
         
-        <div className="max-w-6xl mx-auto">
-          {/* Skills Grid - Single Column */}
-          <div className="animate-slide-in-up">
-            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 max-w-5xl mx-auto">
-              {skills.slice(0, 20).map((skill, index) => (
-                <div
-                  key={skill.name}
-                  className="bg-card border border-border rounded-lg p-3 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="text-2xl mb-1">{skill.emoji}</div>
-                  <h3 className="text-xs font-medium text-center">{skill.name}</h3>
-                </div>
-              ))}
+        <div className="max-w-6xl mx-auto space-y-12">
+          {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
+            <div key={category} className="animate-slide-in-up" style={{ animationDelay: `${categoryIndex * 0.2}s` }}>
+              <h3 className="text-2xl font-bold text-center mb-8 text-primary">
+                {category}
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
+                {skills.map((skill, index) => (
+                  <div
+                    key={skill.name}
+                    className="bg-card border border-border rounded-lg p-4 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
+                    style={{ animationDelay: `${(categoryIndex * 0.2) + (index * 0.1)}s` }}
+                  >
+                    <div className="text-3xl mb-2">{skill.emoji}</div>
+                    <h4 className="text-sm font-medium text-center">{skill.name}</h4>
+                    <div className="w-full bg-secondary rounded-full h-2 mt-2">
+                      <div
+                        className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
+                        style={{ 
+                          width: `${skill.level}%`,
+                          animationDelay: `${(categoryIndex * 0.2) + (index * 0.1) + 0.5}s`
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-xs text-muted-foreground mt-1">{skill.level}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
