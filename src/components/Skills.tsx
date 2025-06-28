@@ -1,4 +1,6 @@
 
+import { IconCloud } from "@/components/ui/interactive-icon-cloud";
+
 const Skills = () => {
   const skills = [
     { name: "React", emoji: "⚛️", level: 95, slug: "react" },
@@ -24,9 +26,8 @@ const Skills = () => {
   ];
 
   const iconSlugs = skills
-  .map(skill => skill.slug)
-  .filter(slug => slug !== "");
-
+    .map(skill => skill.slug)
+    .filter(slug => slug !== "");
 
   return (
     <section id="skills" className="py-20 bg-secondary/20">
@@ -41,19 +42,28 @@ const Skills = () => {
         </div>
         
         <div className="max-w-6xl mx-auto">
-          {/* Skills Grid - Single Column */}
-          <div className="animate-slide-in-up">
-            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 max-w-5xl mx-auto">
-              {skills.slice(0, 20).map((skill, index) => (
-                <div
-                  key={skill.name}
-                  className="bg-card border border-border rounded-lg p-3 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="text-2xl mb-1">{skill.emoji}</div>
-                  <h3 className="text-xs font-medium text-center">{skill.name}</h3>
-                </div>
-              ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Skills Grid - Left Side */}
+            <div className="animate-slide-in-up">
+              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 sm:gap-4">
+                {skills.slice(0, 20).map((skill, index) => (
+                  <div
+                    key={skill.name}
+                    className="bg-card border border-border rounded-lg p-3 card-hover flex flex-col items-center justify-center aspect-square animate-fade-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="text-2xl mb-1">{skill.emoji}</div>
+                    <h3 className="text-xs font-medium text-center">{skill.name}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Icon Cloud - Right Side */}
+            <div className="flex justify-center animate-slide-in-up">
+              <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-background px-20 pb-20 pt-8">
+                <IconCloud iconSlugs={iconSlugs} />
+              </div>
             </div>
           </div>
         </div>
