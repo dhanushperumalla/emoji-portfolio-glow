@@ -60,16 +60,6 @@ const Skills = () => {
                   >
                     <div className="text-3xl mb-2">{skill.emoji}</div>
                     <h4 className="text-sm font-medium text-center">{skill.name}</h4>
-                    <div className="w-full bg-secondary rounded-full h-2 mt-2">
-                      <div
-                        className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                        style={{ 
-                          width: `${skill.level}%`,
-                          animationDelay: `${(categoryIndex * 0.2) + (index * 0.1) + 0.5}s`
-                        }}
-                      ></div>
-                    </div>
-                    <span className="text-xs text-muted-foreground mt-1">{skill.level}%</span>
                   </div>
                 ))}
               </div>
