@@ -27,7 +27,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="text-xl font-bold gradient-text">
-            <a href="/" className="hover:underline focus:underline outline-none">Perumalla Venkata Naga Dhanush</a>
+            <a href="/" className="hover:underline focus:underline outline-none">Dhanush</a>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
