@@ -20,6 +20,7 @@ interface NavBarProps {
 
 export function NavBar({ items, className, onItemClick }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
+  const [isNavigating, setIsNavigating] = useState(false)
 
   // Intersection Observer for scroll-based active state
   useEffect(() => {
@@ -32,21 +33,21 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
       }
     }).filter(section => section.element !== null)
 
-    console.log('Found sections:', sections.map(s => s.id))
-
     if (sections.length === 0) {
-      console.log('No sections found for navigation')
       return
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Skip updates if currently navigating
+        if (isNavigating) return
+
         // Only process entries that are intersecting
         const intersectingEntries = entries.filter(entry => entry.isIntersecting)
         
         if (intersectingEntries.length === 0) return
 
-        // Find the entry with the highest intersection ratio among intersecting entries
+        // Find the entry with the highest intersection ratio
         const topEntry = intersectingEntries.reduce((prev, current) => {
           return current.intersectionRatio > prev.intersectionRatio ? current : prev
         })
@@ -55,13 +56,12 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         const matchingItem = items.find(item => item.url === `#${activeSection}`)
         
         if (matchingItem && matchingItem.name !== activeTab) {
-          console.log('Setting active section to:', matchingItem.name)
           setActiveTab(matchingItem.name)
         }
       },
       {
-        threshold: [0.2, 0.5, 0.8], // More conservative thresholds
-        rootMargin: '-100px 0px -100px 0px' // More restrictive margin to prevent rapid switching
+        threshold: 0.6, // Single threshold for more stable detection
+        rootMargin: '-80px 0px -80px 0px' // Balanced margin
       }
     )
 
@@ -78,11 +78,12 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         }
       })
     }
-  }, [items, activeTab])
+  }, [items, activeTab, isNavigating])
 
   const handleItemClick = (item: NavItem) => {
-    console.log('Navigation clicked:', item.name)
+    setIsNavigating(true)
     setActiveTab(item.name)
+    
     if (onItemClick) {
       onItemClick(item.url)
     } else {
@@ -92,6 +93,11 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         element.scrollIntoView({ behavior: 'smooth' })
       }
     }
+    
+    // Reset navigation state after scroll completes
+    setTimeout(() => {
+      setIsNavigating(false)
+    }, 1000)
   }
 
   return (
