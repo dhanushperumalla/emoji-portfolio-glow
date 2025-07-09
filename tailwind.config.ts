@@ -98,9 +98,11 @@ export default {
 				},
 				'slide-in-left': {
 					'0%': {
-						transform: 'translateX(-100%)'
+						opacity: '0',
+						transform: 'translateX(-50px)'
 					},
 					'100%': {
+						opacity: '1',
 						transform: 'translateX(0)'
 					}
 				},

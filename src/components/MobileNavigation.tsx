@@ -69,7 +69,7 @@ const MobileNavigation = () => {
     <>
       {/* Hamburger Icon */}
       <button
-        className="fixed top-4 left-4 z-50 p-2 rounded-full bg-card border border-border shadow-md md:hidden"
+        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-card border border-border shadow-md md:hidden"
         onClick={() => setMenuOpen(true)}
         aria-label="Open navigation menu"
         style={{ display: menuOpen ? 'none' : 'block' }}
@@ -78,8 +78,8 @@ const MobileNavigation = () => {
       </button>
       {/* Overlay and Drawer */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 flex justify-start bg-black/40 md:hidden">
-          <div className="bg-card w-64 h-full shadow-lg p-6 flex flex-col relative animate-slide-in-left">
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/40 md:hidden">
+          <div className="bg-card w-64 h-full shadow-lg p-6 flex flex-col relative animate-slide-in-right">
             <button
               className="absolute top-4 right-4 p-1 rounded-full hover:bg-muted"
               onClick={() => setMenuOpen(false)}

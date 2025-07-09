@@ -22,7 +22,7 @@ const Hero = () => {
             <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
               Hi, I'm{" "}
               <span className="gradient-text">
-                Dhanush
+                Perumalla Venkata Naga Dhanush
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto">
