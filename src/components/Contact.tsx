@@ -1,14 +1,19 @@
 
 import FormLayout01 from "@/components/ui/form-2";
+import { Vortex } from "@/components/ui/vortex";
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-secondary/20">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center min-h-[80vh]">
-          <FormLayout01 />
-        </div>
-      </div>
+    <section id="contact" className="min-h-screen overflow-hidden">
+      <Vortex
+        backgroundColor="black"
+        rangeY={800}
+        particleCount={500}
+        baseHue={220}
+        className="flex items-center justify-center px-4 py-20 w-full h-full"
+      >
+        <FormLayout01 />
+      </Vortex>
     </section>
   );
 };
