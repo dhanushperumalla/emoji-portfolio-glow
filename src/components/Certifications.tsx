@@ -5,6 +5,22 @@ import { Calendar, Award } from "lucide-react";
 const Certifications = () => {
   const certifications = [
     {
+      title: "Python Programming", 
+      provider: "EDX",
+      image: "/python.png",
+      issued: "July 15, 2024",
+      certificationNo: "d5ded6b498db4ef3a01f359c98bd964b",
+      description: "CS50P: CS50's Introduction to Programming with Python, a course of study offered by HarvardX, an online learning initiative of Harvard University."
+    },
+    {
+      title: "Prompt Engineering and Advanced ChatGPT", 
+      provider: "EDX",
+      image: "/Prompt.png",
+      issued: "June 29, 2024",
+      certificationNo: "b1d362a5cb0c414182665cfd90a1ae4a",
+      description: "ChatGPT102: Prompt Engineering and Advanced ChatGPT, a course of study offered by edX, an online learning initiative of edX."
+    },
+    {
       title: "Certified System Administrator",
       provider: "ServiceNow",
       image: "/ServiceNow-CSA-Certificate.png",
@@ -19,7 +35,8 @@ const Certifications = () => {
       issued: "July 15, 2025",
       certificationNo: "27318452",
       description: "Application development and customization skills"
-    }
+    },
+    
   ];
 
   return (
