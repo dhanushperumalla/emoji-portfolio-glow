@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, Briefcase, FileText, Menu, X } from 'lucide-react';
+import { Home, User, Briefcase, FileText, Menu, X, Award } from 'lucide-react';
 
 const MobileNavigation = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -18,7 +18,7 @@ const MobileNavigation = () => {
 
   // Intersection Observer for scroll-based active state
   useEffect(() => {
-    const sections = ['home', 'skills', 'projects', 'contact'];
+    const sections = ['home', 'skills', 'certifications', 'projects', 'contact'];
     const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
 
     if (sectionElements.length === 0) return;
@@ -59,6 +59,7 @@ const MobileNavigation = () => {
   const navItems = [
     { label: 'Home', icon: Home, section: 'home' },
     { label: 'Skills', icon: User, section: 'skills' },
+    { label: 'Certifications', icon: Award, section: 'certifications' },
     { label: 'Projects', icon: Briefcase, section: 'projects' },
     { label: 'Contact', icon: FileText, section: 'contact' },
   ];
