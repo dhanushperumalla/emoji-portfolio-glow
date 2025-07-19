@@ -69,7 +69,7 @@ const MobileNavigation = () => {
     <>
       {/* Hamburger Icon */}
       <button
-        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-card border border-border shadow-md md:hidden"
+        className="fixed top-4 left-4 z-50 p-2 rounded-full bg-card border border-border shadow-md md:hidden"
         onClick={() => setMenuOpen(true)}
         aria-label="Open navigation menu"
         style={{ display: menuOpen ? 'none' : 'block' }}
