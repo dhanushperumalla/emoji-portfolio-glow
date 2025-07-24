@@ -13,7 +13,7 @@ const Projects = () => {
       image: "/courseguideragent.jpg",
       tags: ["React", "N8N"],
       github: "https://github.com/dhanushperumalla/Course-Guider-Agent",
-      live: "#"
+      live: "https://course-guider-agent.vercel.app/"
     },
     {
       title: "Log Classification",
