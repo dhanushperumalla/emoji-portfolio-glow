@@ -48,13 +48,13 @@ const Hero = () => {
               </Button>
             </div>
             
-            <div className="pt-8 lg:hidden">
-              <ArrowDown className="w-6 h-6 mx-auto animate-bounce text-neutral-400" />
+            <div className="pt-8">
+              <ArrowDown className="w-6 h-6 mx-auto lg:mx-0 animate-bounce text-neutral-400" />
             </div>
           </div>
 
-          {/* Right content - 3D Robot */}
-          <div className="flex-1 relative h-[400px] lg:h-[600px] w-full max-w-lg lg:max-w-none">
+          {/* Right content - 3D Robot - Desktop only */}
+          <div className="hidden lg:block flex-1 relative h-[600px] w-full max-w-none">
             <SplineScene 
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
               className="w-full h-full"
