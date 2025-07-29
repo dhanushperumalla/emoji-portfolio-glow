@@ -75,6 +75,13 @@ export function PortfolioChatbot() {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e as any)
+    }
+  }
+
   return (
     <ExpandableChat
       size="lg"
@@ -119,6 +126,7 @@ export function PortfolioChatbot() {
           <ChatInput
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Ask about Dhanush's projects, skills, or experience..."
             className="flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring"
           />
