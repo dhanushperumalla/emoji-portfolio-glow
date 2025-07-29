@@ -17,8 +17,8 @@ const Hero = () => {
       <GridBackground />
       <Spotlight />
       
-      <div className="container mx-auto px-4 z-10 relative">
-        <div className="flex flex-col lg:flex-row items-center justify-between min-h-screen">
+      <div className="container mx-auto px-4 z-10 relative h-full">
+        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between min-h-screen py-12 lg:py-0">
           {/* Left content */}
           <div className="flex-1 text-center lg:text-left space-y-8 animate-fade-in">
             <div className="space-y-4">
