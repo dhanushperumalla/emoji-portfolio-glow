@@ -20,6 +20,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       <Spline
         scene={scene}
         className={className}
+        style={{ pointerEvents: 'none' }}
       />
     </Suspense>
   )

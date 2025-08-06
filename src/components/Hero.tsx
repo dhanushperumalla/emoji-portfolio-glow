@@ -47,8 +47,8 @@ const Hero = () => {
                 <a href="/Resume.pdf" download>Download CV</a>
               </Button>
             </div>
-            <div className="pt-6 lg:pt-8">
-              <ArrowDown className="w-5 h-5 lg:w-6 lg:h-6 mx-auto lg:mx-0 animate-bounce text-neutral-400" />
+            <div className="pt-6 lg:pt-8 flex justify-center lg:justify-center">
+              <ArrowDown className="w-5 h-5 lg:w-6 lg:h-6 animate-bounce text-neutral-400" />
             </div>
           </div>
 
