@@ -39,7 +39,7 @@ const Hero = () => {
                 <span className="ml-2 text-lg">🏆</span>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start items-center relative z-50">
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center relative z-50">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg w-full sm:w-auto">
                 <a href="#projects">View My Work</a>
               </Button>

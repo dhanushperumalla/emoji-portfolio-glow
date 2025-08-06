@@ -20,7 +20,11 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       <Spline
         scene={scene}
         className={className}
-        style={{ pointerEvents: 'none' }}
+        style={{ 
+          pointerEvents: 'none',
+          userSelect: 'none',
+          overflow: 'hidden'
+        }}
       />
     </Suspense>
   )
