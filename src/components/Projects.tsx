@@ -76,13 +76,17 @@ const Projects = () => {
   };
 
   return (
-    <section className="py-20">
+    <section className="py-28 bg-gradient-to-b from-background via-secondary/3 to-background relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary))_0%,transparent_50%)] opacity-5"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary-glow))_0%,transparent_50%)] opacity-5"></div>
+      
       <div className="container mx-auto px-4" id="projects">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-20 animate-fade-in">
+          <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tight">
             My <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             A collection of projects that showcase my skills and passion for development
           </p>
         </div>
@@ -91,31 +95,33 @@ const Projects = () => {
           {projects.map((project, index) => (
             <Card
               key={project.title}
-              className="bg-card border-border card-hover animate-slide-in-right overflow-hidden"
+              className="group bg-card/90 backdrop-blur-xl border-border/30 card-hover animate-slide-in-right overflow-hidden rounded-2xl hover:border-primary/40"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                  className="w-full h-52 object-cover transition-all duration-700 group-hover:scale-125 group-hover:rotate-2"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-all duration-500"></div>
+                <div className="absolute top-4 right-4 w-3 h-3 bg-primary rounded-full animate-glow-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               
-              <CardHeader>
-                <CardTitle className="text-xl">{project.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">
+              <CardHeader className="space-y-4">
+                <CardTitle className="text-2xl font-bold group-hover:text-primary transition-colors duration-300">{project.title}</CardTitle>
+                <CardDescription className="text-muted-foreground text-base leading-relaxed group-hover:text-foreground transition-colors duration-300">
                   {project.description}
                 </CardDescription>
               </CardHeader>
               
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+              <CardContent className="space-y-6">
+                <div className="flex flex-wrap gap-3">
+                  {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 text-xs bg-primary/20 text-primary rounded-full"
+                      className="px-4 py-2 text-sm bg-primary/15 text-primary rounded-xl font-medium hover:bg-primary/25 transition-colors duration-300 border border-primary/20 group-hover:border-primary/40"
+                      style={{ animationDelay: `${tagIndex * 0.1}s` }}
                     >
                       {tag}
                     </span>
@@ -123,18 +129,18 @@ const Projects = () => {
                 </div>
               </CardContent>
               
-              <CardFooter className="gap-2">
+              <CardFooter className="gap-4 pt-6">
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1"
                 >
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="lg" className="w-full font-semibold">
                     View Code
                   </Button>
                 </a>
-                <Button size="sm" className="flex-1" onClick={() => handleLiveDemoClick(project.live)}>
+                <Button variant="premium" size="lg" className="flex-1 font-semibold" onClick={() => handleLiveDemoClick(project.live)}>
                   Live Demo
                 </Button>
               </CardFooter>

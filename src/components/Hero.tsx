@@ -17,36 +17,44 @@ const Hero = () => {
       <Spotlight />
       
       <div className="container mx-auto px-4 z-10 relative">
-        <div className="text-center space-y-8 animate-fade-in">
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+        <div className="text-center space-y-12 animate-fade-in">
+          <div className="space-y-6">
+            <h1 className="text-6xl md:text-8xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 via-neutral-200 to-neutral-400 tracking-tight">
               Hi, I'm{" "}
-              <span className="gradient-text">
+              <span className="gradient-text drop-shadow-2xl">
                 Dhanush
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto">
-              Full-Stack & AI Developer passionate about creating amazing digital experiences with AI
+            <p className="text-xl md:text-3xl text-neutral-300 max-w-3xl mx-auto font-light leading-relaxed">
+              Full-Stack & AI Developer passionate about creating 
+              <span className="text-primary font-medium"> amazing digital experiences</span> with AI
             </p>
           </div>
-          <div className="flex justify-center mb-6">
-          <div className="px-6 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center gap-2 shadow-md text-base text-gray-200 font-medium"
-              style={{ boxShadow: '0 4px 24px 0 rgba(31, 38, 135, 0.15)' }}>
-            Winner in oTTomator Live Agent Studio Hackathon
-            <span className="ml-2 text-lg">🏆</span>
+          
+          <div className="flex justify-center mb-8">
+            <div className="group px-8 py-4 rounded-2xl border border-primary/30 bg-primary/10 backdrop-blur-xl flex items-center gap-3 shadow-2xl text-lg text-primary-foreground font-semibold hover:scale-105 transition-all duration-300 hover:shadow-primary/20 hover:bg-primary/20 cursor-default">
+              <span className="relative">
+                Winner in oTTomator Live Agent Studio Hackathon
+                <span className="absolute -inset-1 bg-primary/20 blur-sm -z-10 group-hover:bg-primary/30 transition-all duration-300"></span>
+              </span>
+              <span className="text-2xl animate-float">🏆</span>
+            </div>
           </div>
-        </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-50">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center relative z-50">
+            <Button asChild variant="premium" size="lg" className="min-w-[200px] font-bold">
               <a href="#projects">View My Work</a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="px-8 py-6 text-lg border-neutral-600 hover:border-primary text-neutral-300 hover:text-white">
+            <Button asChild variant="glass" size="lg" className="min-w-[200px] font-bold">
               <a href="/Resume.pdf" download>Download CV</a>
             </Button>
           </div>
           
-          <div className="pt-8">
-            <ArrowDown className="w-6 h-6 mx-auto animate-bounce text-neutral-400" />
+          <div className="pt-12">
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-sm text-muted-foreground font-medium tracking-wider uppercase">Explore</span>
+              <ArrowDown className="w-6 h-6 animate-bounce text-primary/60" />
+            </div>
           </div>
         </div>
       </div>

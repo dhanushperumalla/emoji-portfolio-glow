@@ -7,43 +7,63 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Professional dark theme with premium colors */
+    --background: 225 9% 3%;
+    --foreground: 213 31% 91%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 224 10% 5%;
+    --card-foreground: 213 31% 91%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 224 10% 5%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Elegant purple-blue gradient primary */
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 20% 98%;
+    --primary-glow: 258 89% 66%;
+    
+    /* Sophisticated secondary palette */
+    --secondary: 220 14% 11%;
+    --secondary-foreground: 210 20% 98%;
+    --secondary-accent: 220 8% 15%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --muted: 220 13% 13%;
+    --muted-foreground: 217 10% 64%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 210 20% 98%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 20% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 13%;
+    --input: 220 13% 13%;
+    --ring: 262 83% 58%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Professional gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary-accent)) 100%);
+    --gradient-radial: radial-gradient(circle at center, hsl(var(--primary) / 0.15) 0%, transparent 70%);
+    
+    /* Premium shadows */
+    --shadow-primary: 0 4px 20px hsl(var(--primary) / 0.2);
+    --shadow-card: 0 8px 32px hsl(var(--background) / 0.8);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+    
+    /* Enhanced animations */
+    --transition-premium: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --radius: 0.5rem;
+    --sidebar-background: 220 9% 4%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 262 83% 58%;
+    --sidebar-primary-foreground: 210 20% 98%;
+    --sidebar-accent: 220 14% 11%;
+    --sidebar-accent-foreground: 213 31% 91%;
+    --sidebar-border: 220 13% 13%;
+    --sidebar-ring: 262 83% 58%;
+
+    --radius: 0.75rem;
 
     /* Modern Mobile Menu Variables */
     --component-inactive-color: var(--muted-foreground);
@@ -90,20 +110,58 @@
   }
 }
 
+/* Premium gradient text effects */
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
 }
 
+.gradient-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(8px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Enhanced card interactions */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: var(--transition-premium);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-radial);
+  opacity: 0;
+  transition: var(--transition-premium);
+  z-index: 0;
 }
 
 .card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-card), var(--shadow-primary);
+  border-color: hsl(var(--primary) / 0.4);
+}
+
+.card-hover:hover::before {
+  opacity: 1;
+}
+
+.card-hover > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Modern Mobile Menu Styles */
