@@ -37,18 +37,13 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-br from-background via-secondary/5 to-background relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-glow/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
+    <section id="skills" className="py-16 bg-gradient-to-br from-background to-secondary/10">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12 animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             My <span className="gradient-text">Skills</span>
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Technologies and tools I work with to bring ideas to life
           </p>
         </div>
@@ -63,20 +58,18 @@ const Skills = () => {
                 {skills.map((skill, index) => (
                   <Card
                     key={skill.name}
-                    className="group relative overflow-hidden bg-card/80 backdrop-blur-lg border-border/30 hover:border-primary/50 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-primary/20 w-24 h-24 sm:w-28 sm:h-28 animate-fade-in rounded-2xl card-hover"
+                    className="group relative overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/10 w-20 h-20 sm:w-24 sm:h-24 animate-fade-in"
                     style={{ animationDelay: `${(categoryIndex * 0.15) + (index * 0.05)}s` }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
-                    <div className="relative flex flex-col items-center justify-center h-full p-3">
-                      <div className="text-3xl sm:text-4xl mb-2 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 filter drop-shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative flex flex-col items-center justify-center h-full p-2">
+                      <div className="text-2xl sm:text-3xl mb-1 group-hover:scale-110 transition-transform duration-300">
                         {skill.emoji}
                       </div>
-                      <h4 className="text-xs sm:text-sm font-semibold text-center leading-tight opacity-70 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 tracking-wide">
+                      <h4 className="text-xs font-medium text-center leading-tight opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                         {skill.name}
                       </h4>
                     </div>
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/20 to-primary-glow/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
                   </Card>
                 ))}
               </div>
