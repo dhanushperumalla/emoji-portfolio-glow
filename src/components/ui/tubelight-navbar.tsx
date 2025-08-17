@@ -41,27 +41,29 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Only process entries that are intersecting
-        const intersectingEntries = entries.filter(entry => entry.isIntersecting)
-        
-        if (intersectingEntries.length === 0) return
+        // Process all entries to find the most visible section
+        let maxVisibility = 0
+        let mostVisibleSection = null
 
-        // Find the entry with the highest intersection ratio among intersecting entries
-        const topEntry = intersectingEntries.reduce((prev, current) => {
-          return current.intersectionRatio > prev.intersectionRatio ? current : prev
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > maxVisibility) {
+            maxVisibility = entry.intersectionRatio
+            mostVisibleSection = entry.target.id
+          }
         })
 
-        const activeSection = topEntry.target.id
-        const matchingItem = items.find(item => item.url === `#${activeSection}`)
-        
-        if (matchingItem && matchingItem.name !== activeTab) {
-          console.log('Setting active section to:', matchingItem.name)
-          setActiveTab(matchingItem.name)
+        if (mostVisibleSection) {
+          const matchingItem = items.find(item => item.url === `#${mostVisibleSection}`)
+          
+          if (matchingItem && matchingItem.name !== activeTab) {
+            console.log('Setting active section to:', matchingItem.name)
+            setActiveTab(matchingItem.name)
+          }
         }
       },
       {
-        threshold: [0.2, 0.5, 0.8], // More conservative thresholds
-        rootMargin: '-100px 0px -100px 0px' // More restrictive margin to prevent rapid switching
+        threshold: [0.1, 0.3, 0.5], // More responsive thresholds
+        rootMargin: '-80px 0px -20% 0px' // Better detection area
       }
     )
 
@@ -83,19 +85,23 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
   const handleItemClick = (item: NavItem) => {
     console.log('Navigation clicked:', item.name)
     setActiveTab(item.name)
+    
     if (onItemClick) {
       onItemClick(item.url)
     } else {
-      // Smooth scroll to section with offset for fixed navbar
+      // Smooth scroll to section with proper offset
       const element = document.querySelector(item.url)
       if (element) {
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-        const offsetPosition = elementPosition - 80 // Offset for navbar height
+        const navbarHeight = 100 // Account for navbar + padding
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY
+        const offsetPosition = elementPosition - navbarHeight
         
         window.scrollTo({
-          top: offsetPosition,
+          top: Math.max(0, offsetPosition), // Prevent negative scroll
           behavior: 'smooth'
         })
+      } else {
+        console.warn(`Element not found for selector: ${item.url}`)
       }
     }
   }
