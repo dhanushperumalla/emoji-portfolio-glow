@@ -86,10 +86,16 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
     if (onItemClick) {
       onItemClick(item.url)
     } else {
-      // Smooth scroll to section
+      // Smooth scroll to section with offset for fixed navbar
       const element = document.querySelector(item.url)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+        const offsetPosition = elementPosition - 80 // Offset for navbar height
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
       }
     }
   }
