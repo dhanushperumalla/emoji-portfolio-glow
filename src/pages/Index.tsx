@@ -8,7 +8,6 @@ import Footer from "@/components/Footer";
 import MobileNavigation from "@/components/MobileNavigation";
 import { NavBar } from "@/components/ui/tubelight-navbar";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
-import { Spotlight, GridBackground } from "@/components/ui/spotlight";
 import { Home, User, Briefcase, FileText, Award } from "lucide-react";
 
 const Index = () => {
@@ -21,36 +20,30 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black/[0.96] text-foreground relative overflow-x-hidden">
-      {/* Background elements for entire site */}
-      <GridBackground />
-      <Spotlight />
-      
-      <div className="relative z-10">
-        <div className="hidden md:block">
-          <NavBar items={navItems} />
-        </div>
-        <main>
-          <section id="home">
-            <Hero />
-          </section>
-          <section id="skills">
-            <Skills />
-          </section>
-          <section id="certifications">
-            <Certifications />
-          </section>
-          <section id="projects">
-            <Projects />
-          </section>
-          <section id="contact">
-            <Contact />
-          </section>
-        </main>
-        <Footer />
-        <MobileNavigation />
-        <PortfolioChatbot />
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="hidden md:block">
+        <NavBar items={navItems} />
       </div>
+      <main>
+        <section id="home">
+          <Hero />
+        </section>
+        <section id="skills">
+          <Skills />
+        </section>
+        <section id="certifications">
+          <Certifications />
+        </section>
+        <section id="projects">
+          <Projects />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
+      </main>
+      <Footer />
+      <MobileNavigation />
+      <PortfolioChatbot />
     </div>
   );
 };
