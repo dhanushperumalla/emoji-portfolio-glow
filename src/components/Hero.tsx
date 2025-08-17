@@ -11,10 +11,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black/[0.96]">
-      {/* New Spotlight and Grid Background */}
-      <GridBackground />
-      <Spotlight />
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       
       <div className="container mx-auto px-4 z-10 relative">
         <div className="text-center space-y-8 animate-fade-in">
