@@ -22,15 +22,18 @@ export function PortfolioChatbot() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      content: "Hello! I'm Dhanush's AI assistant. How can I help you learn more about his work and skills?",
+      content: "Hello! I'm Dhanush's portfolio assistant. I can help you learn about his professional work, projects, and skills.",
       sender: "ai",
     },
     {
       id: 2,
-      content: "Feel free to ask about his projects, experience, or technical expertise!",
+      content: "Please ask specific questions about his experience, technical expertise, or projects. I'm designed to discuss only professional portfolio content.",
       sender: "ai",
     },
   ])
+  
+  const [conversationCount, setConversationCount] = useState(0)
+  const MAX_CONVERSATION_MESSAGES = 10
 
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -38,6 +41,19 @@ export function PortfolioChatbot() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
+
+    // Check conversation limits
+    if (conversationCount >= MAX_CONVERSATION_MESSAGES) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          content: "Conversation limit reached. Please refresh the page if you need to ask more questions.",
+          sender: "ai",
+        },
+      ])
+      return
+    }
 
     const userMessage = {
       id: messages.length + 1,
@@ -48,6 +64,7 @@ export function PortfolioChatbot() {
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
+    setConversationCount(prev => prev + 1)
 
     try {
       const aiResponse = await aiService.generateResponse(input)
@@ -60,13 +77,27 @@ export function PortfolioChatbot() {
           sender: "ai",
         },
       ])
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error getting AI response:', error)
+      
+      let errorMessage = "I apologize, but I encountered an error. Please try again."
+      
+      // Handle specific error types
+      if (error.code === 'RATE_LIMITED') {
+        errorMessage = error.message
+      } else if (error.code === 'INAPPROPRIATE_CONTENT') {
+        errorMessage = error.message
+      } else if (error.code === 'MESSAGE_TOO_LONG') {
+        errorMessage = error.message
+      } else if (error.code === 'INVALID_REQUEST') {
+        errorMessage = "Please ask normal questions about Dhanush's portfolio and professional experience."
+      }
+      
       setMessages((prev) => [
         ...prev,
         {
           id: prev.length + 1,
-          content: "I apologize, but I encountered an error. Please try again.",
+          content: errorMessage,
           sender: "ai",
         },
       ])
@@ -118,10 +149,14 @@ export function PortfolioChatbot() {
         >
           <ChatInput
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about Dhanush's projects, skills, or experience..."
+            onChange={(e) => setInput(e.target.value.slice(0, 200))}
+            placeholder="Ask about Dhanush's projects, skills, or experience... (200 char max)"
             className="flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring"
+            maxLength={200}
           />
+          <div className="text-xs text-muted-foreground px-1">
+            {input.length}/200 | {conversationCount}/{MAX_CONVERSATION_MESSAGES} msgs
+          </div>
           <Button type="submit" size="icon" className="shrink-0">
             <Send className="h-4 w-4" />
           </Button>
