@@ -34,15 +34,27 @@ export function PortfolioChatbot() {
 
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [inputError, setInputError] = useState("")
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!input.trim()) return
+    const trimmedInput = input.trim()
+    
+    // Client-side input validation
+    if (!trimmedInput) return
+    
+    if (trimmedInput.length > 200) {
+      setInputError("Message too long. Please keep it under 200 characters.")
+      return
+    }
+
+    // Clear any previous errors
+    setInputError("")
 
     const userMessage = {
       id: messages.length + 1,
-      content: input,
-      sender: "user",
+      content: trimmedInput,
+      sender: "user" as const,
     }
 
     setMessages((prev) => [...prev, userMessage])
@@ -50,14 +62,14 @@ export function PortfolioChatbot() {
     setIsLoading(true)
 
     try {
-      const aiResponse = await aiService.generateResponse(input)
+      const aiResponse = await aiService.generateResponse(trimmedInput)
       
       setMessages((prev) => [
         ...prev,
         {
           id: prev.length + 1,
           content: aiResponse,
-          sender: "ai",
+          sender: "ai" as const,
         },
       ])
     } catch (error) {
@@ -66,8 +78,8 @@ export function PortfolioChatbot() {
         ...prev,
         {
           id: prev.length + 1,
-          content: "I apologize, but I encountered an error. Please try again.",
-          sender: "ai",
+          content: "I can only discuss Dhanush's portfolio and professional work. Please ask about his projects or skills.",
+          sender: "ai" as const,
         },
       ])
     } finally {
@@ -114,17 +126,36 @@ export function PortfolioChatbot() {
       <ExpandableChatFooter>
         <form
           onSubmit={handleSubmit}
-          className="flex items-center gap-2 p-1"
+          className="flex flex-col gap-2 p-1"
         >
-          <ChatInput
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about Dhanush's projects, skills, or experience..."
-            className="flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring"
-          />
-          <Button type="submit" size="icon" className="shrink-0">
-            <Send className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <ChatInput
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value)
+                if (inputError) setInputError("")
+              }}
+              placeholder="Ask about Dhanush's projects, skills, or experience..."
+              className={`flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring ${
+                inputError ? "border-destructive" : ""
+              }`}
+              maxLength={200}
+            />
+            <Button 
+              type="submit" 
+              size="icon" 
+              className="shrink-0"
+              disabled={isLoading || !!inputError}
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+          {inputError && (
+            <p className="text-xs text-destructive px-3">{inputError}</p>
+          )}
+          <p className="text-xs text-muted-foreground px-3">
+            {input.length}/200 characters • Portfolio topics only
+          </p>
         </form>
       </ExpandableChatFooter>
     </ExpandableChat>
