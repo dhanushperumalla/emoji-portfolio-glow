@@ -135,6 +135,12 @@ export function PortfolioChatbot() {
                 setInput(e.target.value)
                 if (inputError) setInputError("")
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault()
+                  handleSubmit(e as any)
+                }
+              }}
               placeholder="Ask about Dhanush's projects, skills, or experience..."
               className={`flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring ${
                 inputError ? "border-destructive" : ""
