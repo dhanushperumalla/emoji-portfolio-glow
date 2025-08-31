@@ -92,26 +92,23 @@ export function PortfolioChatbot() {
       size="lg"
       position="bottom-right"
       icon={<Bot className="h-6 w-6" />}
-      className="neon-chat-container"
     >
-      <ExpandableChatHeader className="flex-col text-center justify-center neon-chat-header">
-        <h1 className="text-xl font-semibold neon-text">Chat with Dhanush's AI ✨</h1>
+      <ExpandableChatHeader className="flex-col text-center justify-center">
+        <h1 className="text-xl font-semibold">Chat with Dhanush's AI ✨</h1>
         <p className="text-sm text-muted-foreground">
           Ask me anything about his projects and skills
         </p>
       </ExpandableChatHeader>
 
-      <ExpandableChatBody className="backdrop-blur-sm">
+      <ExpandableChatBody>
         <ChatMessageList>
           {messages.map((message) => (
             <ChatBubble
               key={message.id}
               variant={message.sender === "user" ? "sent" : "received"}
-              className={message.sender === "user" ? "neon-message-user" : "neon-message-ai"}
             >
               <ChatBubbleMessage
                 variant={message.sender === "user" ? "sent" : "received"}
-                className="backdrop-blur-sm"
               >
                 {message.content}
               </ChatBubbleMessage>
@@ -119,19 +116,19 @@ export function PortfolioChatbot() {
           ))}
 
           {isLoading && (
-            <ChatBubble variant="received" className="neon-message-ai">
-              <ChatBubbleMessage isLoading className="backdrop-blur-sm" />
+            <ChatBubble variant="received">
+              <ChatBubbleMessage isLoading />
             </ChatBubble>
           )}
         </ChatMessageList>
       </ExpandableChatBody>
 
-      <ExpandableChatFooter className="border-t border-primary/20 backdrop-blur-sm">
+      <ExpandableChatFooter>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 p-4"
+          className="flex flex-col gap-2 p-1"
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <ChatInput
               value={input}
               onChange={(e) => {
@@ -145,7 +142,7 @@ export function PortfolioChatbot() {
                 }
               }}
               placeholder="Ask about Dhanush's projects, skills, or experience..."
-              className={`neon-chat-input flex-1 min-h-12 resize-none rounded-lg p-3 ${
+              className={`flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring ${
                 inputError ? "border-destructive" : ""
               }`}
               maxLength={200}
@@ -153,18 +150,17 @@ export function PortfolioChatbot() {
             <Button 
               type="submit" 
               size="icon" 
-              className="neon-send-button shrink-0 h-12 w-12"
+              className="shrink-0"
               disabled={isLoading || !!inputError}
             >
-              <Send className="h-5 w-5" />
+              <Send className="h-4 w-4" />
             </Button>
           </div>
           {inputError && (
-            <p className="text-xs text-destructive px-3 animate-fade-in">{inputError}</p>
+            <p className="text-xs text-destructive px-3">{inputError}</p>
           )}
-          <p className="text-xs text-muted-foreground px-3 flex justify-between items-center">
-            <span>{input.length}/200 characters</span>
-            <span className="text-primary/70">Portfolio topics only</span>
+          <p className="text-xs text-muted-foreground px-3">
+            {input.length}/200 characters • Portfolio topics only
           </p>
         </form>
       </ExpandableChatFooter>
