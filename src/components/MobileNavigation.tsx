@@ -25,15 +25,23 @@ const MobileNavigation = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        let maxVisibility = 0;
+        let mostVisibleSection = null;
+
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+          if (entry.isIntersecting && entry.intersectionRatio > maxVisibility) {
+            maxVisibility = entry.intersectionRatio;
+            mostVisibleSection = entry.target.id;
           }
         });
+
+        if (mostVisibleSection) {
+          setActiveSection(mostVisibleSection);
+        }
       },
       {
-        threshold: 0.3,
-        rootMargin: '-20% 0px -20% 0px'
+        threshold: [0.1, 0.3, 0.5],
+        rootMargin: '-80px 0px -20% 0px'
       }
     );
 
@@ -51,8 +59,17 @@ const MobileNavigation = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const navbarHeight = 80; // Account for mobile spacing
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+      
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: "smooth"
+      });
       setMenuOpen(false);
+    } else {
+      console.warn(`Element not found for section: ${sectionId}`);
     }
   };
 
