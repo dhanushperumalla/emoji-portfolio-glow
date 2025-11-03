@@ -83,13 +83,16 @@ const Skills = () => {
           </h3>
           <div className="flex flex-wrap justify-center gap-6 max-w-3xl mx-auto">
             {techStack.map((tech, index) => (
-              <span 
+              <div 
                 key={tech}
-                className="text-foreground/80 hover:text-primary transition-colors duration-200 text-lg animate-fade-in"
+                className="relative group px-6 py-3 rounded-full border border-border/50 transition-all duration-300 hover:border-transparent animate-fade-in overflow-hidden"
                 style={{ animationDelay: `${0.4 + (index * 0.05)}s` }}
               >
-                {tech}
-              </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+                <span className="relative text-foreground/80 group-hover:text-foreground transition-colors duration-200 text-lg font-medium">
+                  {tech}
+                </span>
+              </div>
             ))}
           </div>
         </div>
