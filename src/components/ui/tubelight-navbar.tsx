@@ -134,7 +134,7 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
   return (
     <motion.div
       className={cn(
-        "fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-6 pointer-events-none",
+        "fixed top-0 left-0 right-0 z-50 pt-6 pointer-events-none flex justify-center",
         className,
       )}
       animate={{
