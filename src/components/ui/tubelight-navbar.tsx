@@ -20,6 +20,31 @@ interface NavBarProps {
 
 export function NavBar({ items, className, onItemClick }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  // Handle scroll direction for navbar visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY < 10) {
+        // Always show navbar at the top
+        setIsVisible(true)
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down - hide navbar
+        setIsVisible(false)
+      } else {
+        // Scrolling up - show navbar
+        setIsVisible(true)
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   // Intersection Observer for scroll-based active state
   useEffect(() => {
@@ -107,11 +132,19 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
   }
 
   return (
-    <div
+    <motion.div
       className={cn(
         "fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-6 pointer-events-none",
         className,
       )}
+      animate={{
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0,
+      }}
+      transition={{
+        duration: 0.3,
+        ease: "easeInOut",
+      }}
     >
       <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg pointer-events-auto">
         {items.map((item) => {
@@ -151,6 +184,6 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
           )
         })}
       </div>
-    </div>
+    </motion.div>
   )
 }
