@@ -42,7 +42,7 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-background relative overflow-hidden">
+    <section id="skills" className="py-20 bg-black relative overflow-hidden">
       {/* Shooting Stars Background */}
       <ShootingStars
         starColor="hsl(var(--primary))"
