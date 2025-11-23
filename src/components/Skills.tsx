@@ -1,3 +1,5 @@
+import { ShootingStars } from "@/components/ui/shooting-stars";
+
 const Skills = () => {
   const skillsData = {
     "Programming Languages": [
@@ -40,8 +42,26 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="skills" className="py-20 bg-background relative overflow-hidden">
+      {/* Shooting Stars Background */}
+      <ShootingStars
+        starColor="hsl(var(--primary))"
+        trailColor="hsl(var(--primary) / 0.5)"
+        minSpeed={15}
+        maxSpeed={35}
+        minDelay={1000}
+        maxDelay={3000}
+      />
+      <ShootingStars
+        starColor="hsl(var(--primary) / 0.7)"
+        trailColor="hsl(var(--primary) / 0.3)"
+        minSpeed={10}
+        maxSpeed={25}
+        minDelay={2000}
+        maxDelay={4000}
+      />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
             Skills & <span className="text-primary">Technologies</span>
