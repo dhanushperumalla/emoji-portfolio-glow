@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ButtonColorful } from "@/components/ui/button-colorful";
 import { ArrowDown } from "lucide-react";
 import { Spotlight, GridBackground } from "@/components/ui/spotlight";
 
@@ -37,9 +38,11 @@ const Hero = () => {
           </div>
         </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-50">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
-              <a href="#projects">View My Work</a>
-            </Button>
+            <ButtonColorful 
+              label="View My Work"
+              onClick={handleViewWorkClick}
+              className="px-8 py-6 text-lg"
+            />
             <Button asChild variant="outline" size="lg" className="px-8 py-6 text-lg border-neutral-600 hover:border-primary text-neutral-300 hover:text-white">
               <a href="/Resume.pdf" download>Download CV</a>
             </Button>
