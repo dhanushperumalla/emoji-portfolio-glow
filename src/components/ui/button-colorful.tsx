@@ -26,7 +26,7 @@ export function ButtonColorful({
             <div
                 className={cn(
                     "absolute inset-0",
-                    "bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500",
+                    "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700",
                     "opacity-40 group-hover:opacity-80",
                     "blur transition-opacity duration-500"
                 )}
