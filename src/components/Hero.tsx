@@ -49,7 +49,7 @@ const Hero = () => {
           </div>
           
           <div className="pt-8">
-            <ArrowDown className="w-6 h-6 mx-auto animate-bounce text-neutral-400" />
+            <ArrowDown className="w-6 h-6 mx-auto animate-bounce text-neutral-400" fill="currentColor" />
           </div>
         </div>
       </div>
