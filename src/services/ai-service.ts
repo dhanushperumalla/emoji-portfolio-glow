@@ -12,6 +12,7 @@ class AIService {
   
   private conversationHistory: { content: string; sender: 'user' | 'ai' }[] = [];
   private conversationCount = 0;
+  private cooldownUntil = 0;
 
   // Input guardrails - blocked content patterns
   private static readonly BLOCKED_PATTERNS = [
@@ -76,6 +77,12 @@ class AIService {
       return validation.reason!;
     }
 
+    const now = Date.now();
+    if (now < this.cooldownUntil) {
+      const waitSeconds = Math.max(1, Math.ceil((this.cooldownUntil - now) / 1000));
+      return `Please wait ${waitSeconds}s and try again.`;
+    }
+
     this.conversationCount++;
 
     try {
@@ -98,7 +105,15 @@ class AIService {
 
       if (data?.error) {
         console.error('API error:', data.error);
-        return data.error;
+
+        const retryAfter = typeof data.retryAfterSeconds === 'number' ? data.retryAfterSeconds : null;
+        if (retryAfter && retryAfter > 0) {
+          this.cooldownUntil = Date.now() + retryAfter * 1000;
+        }
+
+        return retryAfter
+          ? `${data.error} (retry in ~${retryAfter}s)`
+          : data.error;
       }
 
       const response = data?.response;

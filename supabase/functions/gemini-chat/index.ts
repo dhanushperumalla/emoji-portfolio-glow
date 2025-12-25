@@ -113,14 +113,45 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Gemini API error:', response.status, errorText);
-      
+
+      let retryAfterSeconds: number | null = null;
+
+      // Try to parse structured RetryInfo from Google's error payload
+      try {
+        const parsed = JSON.parse(errorText);
+        const retry = parsed?.error?.details?.find((d: any) =>
+          typeof d?.['@type'] === 'string' && d['@type'].includes('RetryInfo')
+        )?.retryDelay as string | undefined;
+
+        if (typeof retry === 'string' && retry.endsWith('s')) {
+          const n = Number(retry.slice(0, -1));
+          if (!Number.isNaN(n)) retryAfterSeconds = n;
+        }
+      } catch {
+        // ignore JSON parse errors
+      }
+
+      // Fallback: parse retry from error message text
+      if (retryAfterSeconds == null) {
+        const m = errorText.match(/Please retry in\s+([0-9.]+)s/i);
+        if (m?.[1]) {
+          const n = Number(m[1]);
+          if (!Number.isNaN(n)) retryAfterSeconds = Math.ceil(n);
+        }
+      }
+
       if (response.status === 429) {
+        // NOTE: We return 200 so the client can read the body via supabase.functions.invoke
+        // (invoke treats non-2xx responses as errors and hides the response body).
         return new Response(
-          JSON.stringify({ error: 'Rate limit exceeded. Please try again in a moment.' }),
-          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          JSON.stringify({
+            error: 'Gemini quota/rate limit exceeded for this API key. Please check your Gemini API plan/billing & quotas (your current limit appears to be 0).',
+            retryAfterSeconds,
+          }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
+
       return new Response(
         JSON.stringify({ error: 'AI service temporarily unavailable' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
