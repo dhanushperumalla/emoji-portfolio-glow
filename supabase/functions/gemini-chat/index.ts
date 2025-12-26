@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
 const systemInstruction = `
 You are STRICTLY a portfolio assistant for Perumalla Venkata Naga Dhanush. You MUST ONLY discuss his professional work.
@@ -40,8 +40,8 @@ serve(async (req) => {
   }
 
   try {
-    if (!GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY is not configured');
+    if (!LOVABLE_API_KEY) {
+      console.error('LOVABLE_API_KEY is not configured');
       return new Response(
         JSON.stringify({ error: 'API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -57,97 +57,53 @@ serve(async (req) => {
       );
     }
 
-    // Build conversation contents
-    const contents = [
-      {
-        role: 'user',
-        parts: [{ text: systemInstruction }]
-      },
-      {
-        role: 'model',
-        parts: [{ text: "Understood. I will act as Dhanush's AI assistant and help users learn about his work, projects, and skills." }]
-      }
+    // Build conversation messages in OpenAI format
+    const messages: { role: string; content: string }[] = [
+      { role: 'system', content: systemInstruction }
     ];
 
     // Add conversation history if provided
     if (history && Array.isArray(history)) {
       for (const msg of history) {
-        contents.push({
-          role: msg.sender === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.content }]
+        messages.push({
+          role: msg.sender === 'user' ? 'user' : 'assistant',
+          content: msg.content
         });
       }
     }
 
     // Add current message
-    contents.push({
-      role: 'user',
-      parts: [{ text: message }]
+    messages.push({ role: 'user', content: message });
+
+    console.log('Calling Lovable AI with message:', message.substring(0, 50));
+
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash-lite',
+        messages,
+        max_tokens: 500,
+      }),
     });
-
-    console.log('Calling Gemini API with message:', message.substring(0, 50));
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-          },
-          safetySettings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          ]
-        }),
-      }
-    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Gemini API error:', response.status, errorText);
-
-      let retryAfterSeconds: number | null = null;
-
-      // Try to parse structured RetryInfo from Google's error payload
-      try {
-        const parsed = JSON.parse(errorText);
-        const retry = parsed?.error?.details?.find((d: any) =>
-          typeof d?.['@type'] === 'string' && d['@type'].includes('RetryInfo')
-        )?.retryDelay as string | undefined;
-
-        if (typeof retry === 'string' && retry.endsWith('s')) {
-          const n = Number(retry.slice(0, -1));
-          if (!Number.isNaN(n)) retryAfterSeconds = n;
-        }
-      } catch {
-        // ignore JSON parse errors
-      }
-
-      // Fallback: parse retry from error message text
-      if (retryAfterSeconds == null) {
-        const m = errorText.match(/Please retry in\s+([0-9.]+)s/i);
-        if (m?.[1]) {
-          const n = Number(m[1]);
-          if (!Number.isNaN(n)) retryAfterSeconds = Math.ceil(n);
-        }
-      }
+      console.error('Lovable AI error:', response.status, errorText);
 
       if (response.status === 429) {
-        // NOTE: We return 200 so the client can read the body via supabase.functions.invoke
-        // (invoke treats non-2xx responses as errors and hides the response body).
         return new Response(
-          JSON.stringify({
-            error: 'Gemini quota/rate limit exceeded for this API key. Please check your Gemini API plan/billing & quotas (your current limit appears to be 0).',
-            retryAfterSeconds,
-          }),
+          JSON.stringify({ error: 'Rate limit exceeded. Please try again in a moment.' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: 'AI credits exhausted. Please add credits to continue.' }),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -159,12 +115,12 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('Gemini API response received');
+    console.log('Lovable AI response received');
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const text = data.choices?.[0]?.message?.content;
 
     if (!text) {
-      console.error('Empty response from Gemini:', JSON.stringify(data));
+      console.error('Empty response from Lovable AI:', JSON.stringify(data));
       return new Response(
         JSON.stringify({ error: 'No response generated' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
