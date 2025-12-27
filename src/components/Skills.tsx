@@ -86,7 +86,7 @@ const Skills = () => {
           {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
             <div 
               key={category} 
-              className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-8 hover:border-primary/30 transition-all duration-300 animate-fade-in"
+              className="bg-transparent backdrop-blur-sm border border-border/30 rounded-lg p-8 hover:border-primary/30 transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${categoryIndex * 0.1}s` }}
             >
               <h3 className="text-xl font-semibold mb-6 text-primary">
