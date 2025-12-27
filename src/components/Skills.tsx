@@ -1,4 +1,5 @@
 import { ShootingStars } from "@/components/ui/shooting-stars";
+import { GradientDots } from "@/components/ui/gradient-dots";
 
 const Skills = () => {
   const skillsData = {
@@ -43,6 +44,15 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 bg-black relative overflow-hidden">
+      {/* Gradient Dots Background */}
+      <GradientDots 
+        dotSize={6}
+        spacing={12}
+        duration={40}
+        colorCycleDuration={8}
+        backgroundColor="hsl(var(--background))"
+        className="opacity-60"
+      />
       {/* Shooting Stars Background */}
       <ShootingStars
         starColor="hsl(var(--primary))"
