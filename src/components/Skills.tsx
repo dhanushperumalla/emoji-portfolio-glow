@@ -1,5 +1,4 @@
 import { ShootingStars } from "@/components/ui/shooting-stars";
-import { EtheralShadow } from "@/components/ui/etheral-shadow";
 
 const Skills = () => {
   const skillsData = {
@@ -44,13 +43,6 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 bg-black relative overflow-hidden">
-      {/* Ethereal Shadow Background */}
-      <EtheralShadow
-        color="hsl(var(--primary))"
-        animation={{ scale: 50, speed: 30 }}
-        noise={{ opacity: 0.03, scale: 1 }}
-      />
-      
       {/* Shooting Stars Background */}
       <ShootingStars
         starColor="hsl(var(--primary))"
