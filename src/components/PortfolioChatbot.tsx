@@ -160,7 +160,7 @@ export function PortfolioChatbot() {
             <p className="text-xs text-destructive px-3">{inputError}</p>
           )}
           <p className="text-xs text-muted-foreground px-3">
-            {input.length}/200 characters • Portfolio topics only
+            {input.length}/200 characters 
           </p>
         </form>
       </ExpandableChatFooter>
