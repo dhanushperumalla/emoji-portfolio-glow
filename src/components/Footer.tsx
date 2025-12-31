@@ -46,12 +46,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
-        <div className="border-t border-border mt-8 pt-8 text-center">
-          <p className="text-muted-foreground">
-            © {currentYear} Perumalla Venkata Naga Dhanush. All rights reserved. Built with ❤️ using React & Tailwind CSS.
-          </p>
-        </div>
       </div>
     </footer>
   );
