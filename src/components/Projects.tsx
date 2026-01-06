@@ -8,6 +8,14 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Plant Vision Agro",
+      description: "AI-powered web app that analyzes crop images to instantly detect plant diseases and suggest treatment recommendations for farmers.",
+      image: "/PlantAIVision.png",
+      tags: ["React", "N8N", "PlantAPI"],
+      github: "https://github.com/dhanushperumalla/plant-vision-agro",
+      live: "https://plant-vision-agro.vercel.app/"
+    },
+    {
       title: "Course Guider Agent",
       description: "A modern AI Chat Bot built with React, N8N integration for Agentic Workflow.",
       image: "/courseguideragent.jpg",
