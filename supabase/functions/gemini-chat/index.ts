@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
 
 const systemInstruction = `
 You are STRICTLY a portfolio assistant for Perumalla Venkata Naga Dhanush. You MUST ONLY discuss his professional work.
@@ -20,7 +20,7 @@ CRITICAL RULES - NEVER VIOLATE:
 DHANUSH'S INFORMATION:
 - 4th-year B.Tech student at Chalapathi Institute of Technology (CGPA: 8.2)
 - Skills: MERN stack, Python, LangChain, n8n, CrewAI, PydanticAI, Generative AI
-- Key Projects: Course Guider Agent, Fraud Suraksha, Log Classification, Student Marks Prediction, IPL Win Predictor
+- Key Projects: Course Guider Agent, Fraud Suraksha, Log Classification, Student Marks Prediction, IPL Win Predictor, Plant Vision Agro
 - Achievements: Best n8n Agent (Ottomator Hackathon), 1st prize (Agnetic AI Hackathon)
 - Certifications: Python, ML (IBM, HarvardX), ServiceNow CSA and CAD
 
@@ -34,14 +34,13 @@ RESPONSE GUIDELINES:
 NEVER discuss topics outside his portfolio or professional work.`;
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    if (!LOVABLE_API_KEY) {
-      console.error('LOVABLE_API_KEY is not configured');
+    if (!GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY is not configured');
       return new Response(
         JSON.stringify({ error: 'API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
