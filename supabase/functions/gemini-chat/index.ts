@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
@@ -20,7 +20,7 @@ CRITICAL RULES - NEVER VIOLATE:
 DHANUSH'S INFORMATION:
 - 4th-year B.Tech student at Chalapathi Institute of Technology (CGPA: 8.2)
 - Skills: MERN stack, Python, LangChain, n8n, CrewAI, PydanticAI, Generative AI
-- Key Projects: Course Guider Agent, Fraud Suraksha, Log Classification, Student Marks Prediction, IPL Win Predictor
+- Key Projects: Course Guider Agent, Fraud Suraksha, Log Classification, Student Marks Prediction, IPL Win Predictor, Plant Vision Agro
 - Achievements: Best n8n Agent (Ottomator Hackathon), 1st prize (Agnetic AI Hackathon)
 - Certifications: Python, ML (IBM, HarvardX), ServiceNow CSA and CAD
 
@@ -34,7 +34,6 @@ RESPONSE GUIDELINES:
 NEVER discuss topics outside his portfolio or professional work.`;
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -57,12 +56,10 @@ serve(async (req) => {
       );
     }
 
-    // Build conversation messages in OpenAI format
     const messages: { role: string; content: string }[] = [
       { role: 'system', content: systemInstruction }
     ];
 
-    // Add conversation history if provided
     if (history && Array.isArray(history)) {
       for (const msg of history) {
         messages.push({
@@ -72,7 +69,6 @@ serve(async (req) => {
       }
     }
 
-    // Add current message
     messages.push({ role: 'user', content: message });
 
     console.log('Calling Lovable AI with message:', message.substring(0, 50));
