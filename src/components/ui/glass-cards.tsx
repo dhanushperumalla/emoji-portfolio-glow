@@ -88,32 +88,34 @@ const GlassCard: React.FC<CardProps> = ({ card, index, totalCards }) => {
           />
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col md:flex-row w-full p-6 md:p-10 gap-6">
+          <div className="relative z-10 flex flex-col md:flex-row w-full p-6 md:p-10 gap-8">
             {/* Left: Info */}
-            <div className="md:w-[40%] flex flex-col justify-center">
-              <div className="flex items-center gap-2 mb-4">
-                <Award className="h-6 w-6 text-primary" />
-                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-sm">
+            <div className="md:w-[40%] flex flex-col justify-center space-y-4">
+              <div className="flex items-center gap-2">
+                <Award className="h-6 w-6" style={{ color: card.color }} />
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30 text-sm font-semibold backdrop-blur-sm">
                   {card.provider}
                 </Badge>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">{card.title}</h3>
-              <p className="text-muted-foreground text-sm md:text-base mb-5 leading-relaxed">{card.description}</p>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Issued: {card.issued}</span>
-              </div>
-              <div className="text-xs text-muted-foreground mt-2">
-                Certificate No: {card.certificationNo}
+              <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg leading-tight">{card.title}</h3>
+              <p className="text-white/90 text-sm md:text-base leading-relaxed drop-shadow-md">{card.description}</p>
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center gap-2 text-sm text-white/90">
+                  <Calendar className="h-4 w-4 text-white/80" />
+                  <span className="font-medium">Issued: {card.issued}</span>
+                </div>
+                <div className="text-xs text-white/75 font-medium">
+                  Certificate No: {card.certificationNo}
+                </div>
               </div>
             </div>
 
             {/* Right: Image */}
-            <div className="md:w-[60%] flex items-center justify-center">
+            <div className="md:w-[60%] flex items-center justify-center p-4">
               <img
                 src={card.image}
                 alt={`${card.title} Certificate`}
-                className="w-full h-auto max-h-[420px] object-contain rounded-xl shadow-lg"
+                className="w-full h-auto max-h-[420px] object-contain rounded-xl shadow-2xl"
               />
             </div>
           </div>
