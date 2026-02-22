@@ -24,20 +24,10 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
-            Get In <span className="text-primary">Touch</span>
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Have a project in mind? Let's work together to bring your ideas to life.
-          </p>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <ContactCard
-            title="Let's Connect"
-            description="Feel free to reach out for collaborations, freelance opportunities, or just a friendly chat about tech."
+            title="Get in touch"
+            description="If you have any questions regarding my Services or need help, please fill out the form here. I do my best to respond within 1 business day."
             contactInfo={[
               {
                 icon: MailIcon,
@@ -50,13 +40,8 @@ const Contact = () => {
                 value: "+91 6305 XXXXXX",
               },
               {
-                icon: LinkedinIcon,
-                label: "LinkedIn",
-                value: "Dhanush Pavan Kumar",
-              },
-              {
                 icon: MapPinIcon,
-                label: "Location",
+                label: "Address",
                 value: "India",
                 className: "col-span-2",
               },
