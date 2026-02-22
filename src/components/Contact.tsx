@@ -63,11 +63,11 @@ const Contact = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" name="message" placeholder="Your message..." rows={4} required />
+                <Textarea id="message" name="message" placeholder="Your message..." rows={4} className="bg-background border-border" required />
                 <ValidationError prefix="Message" field="message" errors={state.errors} />
               </div>
-              <Button className="w-full" type="submit" disabled={state.submitting}>
-                {state.submitting ? "Sending..." : "Send Message"}
+              <Button className="w-full bg-muted-foreground/20 hover:bg-muted-foreground/30 text-foreground border border-border" type="submit" disabled={state.submitting}>
+                {state.submitting ? "Sending..." : "Submit"}
               </Button>
             </form>
           </ContactCard>
