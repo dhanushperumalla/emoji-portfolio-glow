@@ -48,20 +48,18 @@ const Contact = () => {
             ]}
           >
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" name="name" placeholder="Your name" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" type="email" placeholder="you@example.com" required />
-                  <ValidationError prefix="Email" field="email" errors={state.errors} />
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" name="name" placeholder="Your name" className="bg-background border-border" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" name="subject" placeholder="What's this about?" />
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" type="email" placeholder="you@example.com" className="bg-background border-border" required />
+                <ValidationError prefix="Email" field="email" errors={state.errors} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input id="phone" name="phone" placeholder="Your phone number" className="bg-background border-border" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Message</Label>
