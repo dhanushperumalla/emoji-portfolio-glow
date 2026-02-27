@@ -74,8 +74,13 @@
     @apply border-border;
   }
 
+  html,
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+
+  body {
     padding-bottom: 80px; /* Add space for mobile navigation */
   }
 
