@@ -1,9 +1,5 @@
 import { ContactCard } from "@/components/ui/contact-card";
 import { MailIcon, PhoneIcon, MapPinIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useForm, ValidationError } from "@formspree/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -18,12 +14,12 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 bg-[hsl(0,0%,4%)]">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <ContactCard
-            title="Get In Touch"
-            description="Ready to start your next project? Let's work together to create something amazing! Fill out the form and I'll get back to you as soon as possible."
+            title="Get in touch"
+            description="If you have any questions regarding my work or need help, please fill out the form here. I do my best to respond within 1 business day."
             contactInfo={[
               {
                 icon: MailIcon,
@@ -43,53 +39,57 @@ const Contact = () => {
               },
             ]}
           >
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <Label htmlFor="name" className="text-foreground">Name</Label>
-                <Input
+                <label htmlFor="name" className="block text-sm font-medium text-[hsl(0,0%,90%)] mb-2">Name</label>
+                <input
                   id="name"
                   name="name"
-                  placeholder="Your name"
-                  className="mt-1 bg-muted/30 border-border/50"
+                  placeholder=""
                   required
+                  className="w-full h-11 rounded-md border border-[hsl(0,0%,18%)] bg-[hsl(0,0%,5%)] px-3 text-sm text-[hsl(0,0%,90%)] outline-none focus:border-[hsl(0,0%,30%)] transition-colors"
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="text-foreground">Email</Label>
-                <Input
+                <label htmlFor="email" className="block text-sm font-medium text-[hsl(0,0%,90%)] mb-2">Email</label>
+                <input
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="Your email"
-                  className="mt-1 bg-muted/30 border-border/50"
+                  placeholder=""
                   required
+                  className="w-full h-11 rounded-md border border-[hsl(0,0%,18%)] bg-[hsl(0,0%,5%)] px-3 text-sm text-[hsl(0,0%,90%)] outline-none focus:border-[hsl(0,0%,30%)] transition-colors"
                 />
                 <ValidationError prefix="Email" field="email" errors={state.errors} />
               </div>
               <div>
-                <Label htmlFor="phone" className="text-foreground">Phone</Label>
-                <Input
+                <label htmlFor="phone" className="block text-sm font-medium text-[hsl(0,0%,90%)] mb-2">Phone</label>
+                <input
                   type="tel"
                   id="phone"
                   name="phone"
-                  placeholder="Your phone"
-                  className="mt-1 bg-muted/30 border-border/50"
+                  placeholder=""
+                  className="w-full h-11 rounded-md border border-[hsl(0,0%,18%)] bg-[hsl(0,0%,5%)] px-3 text-sm text-[hsl(0,0%,90%)] outline-none focus:border-[hsl(0,0%,30%)] transition-colors"
                 />
               </div>
               <div>
-                <Label htmlFor="message" className="text-foreground">Message</Label>
-                <Textarea
+                <label htmlFor="message" className="block text-sm font-medium text-[hsl(0,0%,90%)] mb-2">Message</label>
+                <textarea
                   id="message"
                   name="message"
-                  placeholder="Tell me about your project..."
-                  className="mt-1 bg-muted/30 border-border/50 min-h-[100px]"
+                  rows={5}
                   required
+                  className="w-full rounded-md border border-[hsl(0,0%,18%)] bg-[hsl(0,0%,5%)] px-3 py-2 text-sm text-[hsl(0,0%,90%)] outline-none focus:border-[hsl(0,0%,30%)] transition-colors resize-y"
                 />
                 <ValidationError prefix="Message" field="message" errors={state.errors} />
               </div>
-              <Button type="submit" className="w-full" disabled={state.submitting}>
+              <button
+                type="submit"
+                disabled={state.submitting}
+                className="w-full h-11 rounded-md bg-[hsl(0,0%,88%)] text-[hsl(0,0%,8%)] text-sm font-medium hover:bg-[hsl(0,0%,95%)] transition-colors disabled:opacity-50"
+              >
                 Submit
-              </Button>
+              </button>
             </form>
           </ContactCard>
         </div>
