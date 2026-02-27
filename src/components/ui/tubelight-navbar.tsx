@@ -105,7 +105,7 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
         }
       })
     }
-  }, [items, activeTab])
+  }, [items])
 
   const handleItemClick = (item: NavItem) => {
     console.log('Navigation clicked:', item.name)
