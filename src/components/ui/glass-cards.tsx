@@ -74,7 +74,8 @@ const GlassCard: React.FC<CardProps> = ({ card, index, totalCards }) => {
         />
 
         {/* Main Card */}
-        <div className="relative w-full h-full flex rounded-3xl overflow-hidden"
+        <div
+          className="relative flex h-full w-full rounded-3xl overflow-hidden"
           style={{
             background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
             backdropFilter: 'blur(25px) saturate(180%)',
@@ -88,7 +89,7 @@ const GlassCard: React.FC<CardProps> = ({ card, index, totalCards }) => {
           />
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col md:flex-row w-full p-6 md:p-10 gap-8">
+          <div className="relative z-10 flex w-full flex-col gap-8 p-6 md:flex-row md:p-10">
             {/* Left: Info */}
             <div className="md:w-[40%] flex flex-col justify-center space-y-4">
               <div className="flex items-center gap-2">
@@ -115,7 +116,7 @@ const GlassCard: React.FC<CardProps> = ({ card, index, totalCards }) => {
               <img
                 src={card.image}
                 alt={`${card.title} Certificate`}
-                className="w-full h-auto max-h-[420px] object-contain rounded-xl shadow-2xl"
+                className="max-h-[420px] max-w-full h-auto w-auto object-contain rounded-xl shadow-2xl"
               />
             </div>
           </div>

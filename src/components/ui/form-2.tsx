@@ -9,7 +9,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useForm, ValidationError } from '@formspree/react';
 import { useState } from 'react';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -73,8 +73,8 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       type={type}
       data-slot="input"
       className={cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "file:text-foreground placeholder:text-slate-400 selection:bg-primary selection:text-primary-foreground border-white/10 flex h-10 w-full min-w-0 rounded-[5px] border bg-slate-950/60 px-3 py-2 text-base text-slate-50 shadow-[0_0_0_1px_rgba(15,23,42,0.6)] transition-[color,box-shadow,background-color,border-color] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-primary focus-visible:ring-primary/40 focus-visible:ring-[3px]",
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         className
       )}
@@ -129,94 +129,91 @@ export default function FormLayout01() {
     setShowedToast(true);
   }
   return (
-    <div className="flex items-center justify-center p-10">
-      <div className="sm:mx-auto sm:max-w-2xl">
-        <Toaster position="top-center" richColors />
-        <h3 className="text-2xl font-semibold text-foreground dark:text-foreground">
-          Get In Touch
-        </h3>
-        <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">
-          Ready to start your next project? Let's work together to create something amazing!
-        </p>
-        <form onSubmit={handleSubmit} className="mt-8">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
-            <div className="col-span-full sm:col-span-3">
-              <Label
-                htmlFor="first-name"
-                className="text-sm font-medium text-foreground dark:text-foreground"
-              >
-                First name
-                <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="text"
-                id="first-name"
-                name="first-name"
-                autoComplete="first-name"
-                placeholder="First name"
-                className="mt-2"
-                required
-              />
-            </div>
-            <div className="col-span-full sm:col-span-3">
-              <Label
-                htmlFor="last-name"
-                className="text-sm font-medium text-foreground dark:text-foreground"
-              >
-                Last name
-                <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="text"
-                id="last-name"
-                name="last-name"
-                autoComplete="last-name"
-                placeholder="Last name"
-                className="mt-2"
-                required
-              />
-            </div>
-            <div className="col-span-full">
-              <Label
-                htmlFor="email"
-                className="text-sm font-medium text-foreground dark:text-foreground"
-              >
-                Email
-                <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                autoComplete="email"
-                placeholder="Email"
-                className="mt-2"
-                required
-              />
-              <ValidationError prefix="Email" field="email" errors={state.errors} />
-            </div>
-            <div className="col-span-full">
-              <Label
-                htmlFor="message"
-                className="text-sm font-medium text-foreground dark:text-foreground"
-              >
-                Message
-                <span className="text-red-500">*</span>
-              </Label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                placeholder="Tell me about your project..."
-                className="mt-2 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
-                required
-              />
-              <ValidationError prefix="Message" field="message" errors={state.errors} />
-            </div>
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
+          <div className="col-span-full sm:col-span-3">
+            <Label
+              htmlFor="first-name"
+              className="text-sm font-medium text-foreground dark:text-foreground"
+            >
+              First name
+              <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              type="text"
+              id="first-name"
+              name="first-name"
+              autoComplete="first-name"
+              placeholder="First name"
+              className="mt-2"
+              required
+            />
           </div>
-          <Button type="submit" className="mt-6 w-full" disabled={state.submitting}>Send Message</Button>
-        </form>
-      </div>
+          <div className="col-span-full sm:col-span-3">
+            <Label
+              htmlFor="last-name"
+              className="text-sm font-medium text-foreground dark:text-foreground"
+            >
+              Last name
+              <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              type="text"
+              id="last-name"
+              name="last-name"
+              autoComplete="last-name"
+              placeholder="Last name"
+              className="mt-2"
+              required
+            />
+          </div>
+          <div className="col-span-full">
+            <Label
+              htmlFor="email"
+              className="text-sm font-medium text-foreground dark:text-foreground"
+            >
+              Email
+              <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              autoComplete="email"
+              placeholder="Email"
+              className="mt-2"
+              required
+            />
+            <ValidationError prefix="Email" field="email" errors={state.errors} />
+          </div>
+          <div className="col-span-full">
+            <Label
+              htmlFor="message"
+              className="text-sm font-medium text-foreground dark:text-foreground"
+            >
+              Message
+              <span className="text-red-500">*</span>
+            </Label>
+            <textarea
+              id="message"
+              name="message"
+              rows={4}
+              placeholder="Tell me about your project..."
+              className="mt-2 w-full rounded-[5px] border border-white/10 bg-slate-950/60 px-3 py-2 text-base text-slate-50 shadow-[0_0_0_1px_rgba(15,23,42,0.6)] focus-visible:border-primary focus-visible:ring-primary/40 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive placeholder:text-slate-400"
+              required
+            />
+            <ValidationError prefix="Message" field="message" errors={state.errors} />
+          </div>
+        </div>
+        <Button
+          type="submit"
+          className="mt-2 w-full rounded-[5px]"
+          disabled={state.submitting}
+        >
+          Send Message
+        </Button>
+      </form>
     </div>
   );
 }
