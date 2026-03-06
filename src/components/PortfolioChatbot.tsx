@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, FormEvent } from "react"
-import { Send, Bot, CornerDownLeft } from "lucide-react"
+import { Send, Bot, Rocket, Brain, Trophy, Mail } from "lucide-react"
 import { aiService } from "@/services/ai-service"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,18 +17,38 @@ import {
   ExpandableChatFooter,
 } from "@/components/ui/expandable-chat"
 import { ChatMessageList } from "@/components/ui/chat-message-list"
+import { motion } from "framer-motion"
+
+const QUICK_REPLIES = [
+  {
+    label: "🚀 View Projects",
+    icon: Rocket,
+    response: `Here are Dhanush's notable projects:\n\n• **Plant Vision Agro** – AI crop disease detection app\n• **Course Guider Agent** – AI chatbot for career guidance\n• **Fraud Suraksha** – AI-powered fraud detection assistant\n• **AI Social Media Post Generator** – AI app for generating posts\n• **Log Classification** – AI system for log analysis\n\nWant to know more about any of these?`,
+  },
+  {
+    label: "🧠 Skills",
+    icon: Brain,
+    response: `Here are Dhanush's skills:\n\n**Programming Languages:**\nHTML, CSS, JavaScript, Python, TypeScript, SQL\n\n**Frameworks & Libraries:**\nReact.js, Node.js, Express.js, Next.js, LangChain, CrewAI, Tailwind CSS\n\n**Databases & Tools:**\nMySQL, MongoDB, PostgreSQL, Git/GitHub, Docker, Postman`,
+  },
+  {
+    label: "🏆 Certifications",
+    icon: Trophy,
+    response: `Dhanush holds these certifications:\n\n• **CS50P:** Introduction to Programming with Python (HarvardX)\n• **Prompt Engineering and Advanced ChatGPT** (edX)\n• **ServiceNow Certified System Administrator**\n• **ServiceNow Certified Application Developer**`,
+  },
+  {
+    label: "📬 Contact",
+    icon: Mail,
+    response: `Here's how to reach Dhanush:\n\n📧 Email: perumalladhanush102@gmail.com\n📞 Phone: +91 6281091586\n📍 Location: Andhra Pradesh, India`,
+  },
+]
 
 export function PortfolioChatbot() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      content: "Hello! I'm Dhanush's AI assistant. How can I help you learn more about his work and skills?",
+      content: "Hi there! 👋\nWelcome to Dhanush's portfolio. I'm his AI assistant.\nI can help you explore his projects, skills, certifications, or contact details.",
       sender: "ai",
-    },
-    {
-      id: 2,
-      content: "Feel free to ask about his projects, experience, or technical expertise!",
-      sender: "ai",
+      showQuickReplies: true,
     },
   ])
 
