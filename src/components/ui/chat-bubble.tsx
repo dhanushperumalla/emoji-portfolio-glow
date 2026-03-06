@@ -1,11 +1,10 @@
-
 "use client"
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { MessageLoading } from "@/components/ui/message-loading";
+import { MessageLoading } from "@/components/ui/message-loading"
 
 interface ChatBubbleProps {
   variant?: "sent" | "received"
@@ -49,10 +48,23 @@ export function ChatBubbleMessage({
   return (
     <div
       className={cn(
-        "rounded-lg p-3",
-        variant === "sent" ? "bg-primary text-primary-foreground" : "bg-muted",
+        "rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[85%]",
         className
       )}
+      style={
+        variant === "sent"
+          ? {
+              background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+              color: "white",
+              boxShadow: "0 2px 12px rgba(59,130,246,0.3)",
+            }
+          : {
+              background: "rgba(30, 45, 80, 0.4)",
+              border: "1px solid rgba(255,255,255,0.06)",
+              color: "rgba(255,255,255,0.9)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+            }
+      }
     >
       {isLoading ? (
         <div className="flex items-center space-x-2">

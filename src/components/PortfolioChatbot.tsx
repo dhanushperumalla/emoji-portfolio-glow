@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, FormEvent } from "react"
+import { useState, useEffect, useRef, FormEvent } from "react"
 import { Send, Bot, Rocket, Brain, Trophy, Mail } from "lucide-react"
 import { aiService } from "@/services/ai-service"
 import { Button } from "@/components/ui/button"
@@ -23,6 +23,7 @@ interface Message {
   content: string
   sender: "user" | "ai"
   showQuickReplies?: boolean
+  isStreaming?: boolean
 }
 
 const QUICK_REPLIES = [
@@ -76,7 +77,7 @@ MySQL, MongoDB, PostgreSQL, Git/GitHub, Docker, Postman`,
 
 function renderMarkdown(text: string) {
   return text.split("\n").map((line, i) => {
-    const boldReplaced = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    const boldReplaced = line.replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300 font-semibold">$1</strong>')
     return (
       <span key={i}>
         {boldReplaced !== line ? (
@@ -90,6 +91,55 @@ function renderMarkdown(text: string) {
   })
 }
 
+// Streaming text hook
+function useStreamingText(fullText: string, isStreaming: boolean, speed = 12) {
+  const [displayed, setDisplayed] = useState("")
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    if (!isStreaming) {
+      setDisplayed(fullText)
+      setDone(true)
+      return
+    }
+    setDisplayed("")
+    setDone(false)
+    let i = 0
+    const interval = setInterval(() => {
+      i += 1
+      setDisplayed(fullText.slice(0, i))
+      if (i >= fullText.length) {
+        clearInterval(interval)
+        setDone(true)
+      }
+    }, speed)
+    return () => clearInterval(interval)
+  }, [fullText, isStreaming, speed])
+
+  return { displayed, done }
+}
+
+function StreamingMessage({ content, onDone }: { content: string; onDone: () => void }) {
+  const { displayed, done } = useStreamingText(content, true, 10)
+  const calledRef = useRef(false)
+
+  useEffect(() => {
+    if (done && !calledRef.current) {
+      calledRef.current = true
+      onDone()
+    }
+  }, [done, onDone])
+
+  return (
+    <>
+      {renderMarkdown(displayed)}
+      {!done && (
+        <span className="inline-block w-[2px] h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />
+      )}
+    </>
+  )
+}
+
 export function PortfolioChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -97,6 +147,7 @@ export function PortfolioChatbot() {
       content: "Hi there! 👋\nWelcome to Dhanush's portfolio. I'm his AI assistant.\nI can help you explore his projects, skills, certifications, or contact details.",
       sender: "ai",
       showQuickReplies: true,
+      isStreaming: false,
     },
   ])
 
@@ -106,16 +157,23 @@ export function PortfolioChatbot() {
 
   const handleQuickReply = (reply: typeof QUICK_REPLIES[0]) => {
     const userMsg: Message = {
-      id: messages.length + 1,
+      id: Date.now(),
       content: reply.label,
       sender: "user",
     }
     const aiMsg: Message = {
-      id: messages.length + 2,
+      id: Date.now() + 1,
       content: reply.response,
       sender: "ai",
+      isStreaming: true,
     }
     setMessages((prev) => [...prev, userMsg, aiMsg])
+  }
+
+  const handleStreamDone = (msgId: number) => {
+    setMessages((prev) =>
+      prev.map((m) => (m.id === msgId ? { ...m, isStreaming: false } : m))
+    )
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -131,7 +189,7 @@ export function PortfolioChatbot() {
     setInputError("")
 
     const userMessage: Message = {
-      id: messages.length + 1,
+      id: Date.now(),
       content: trimmedInput,
       sender: "user",
     }
@@ -142,15 +200,18 @@ export function PortfolioChatbot() {
 
     try {
       const aiResponse = await aiService.generateResponse(trimmedInput)
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 1, content: aiResponse, sender: "ai" },
-      ])
+      const aiMsg: Message = {
+        id: Date.now(),
+        content: aiResponse,
+        sender: "ai",
+        isStreaming: true,
+      }
+      setMessages((prev) => [...prev, aiMsg])
     } catch (error) {
       console.error('Error getting AI response:', error)
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 1, content: "I can only discuss Dhanush's portfolio and professional work. Please ask about his projects or skills.", sender: "ai" },
+        { id: Date.now(), content: "I can only discuss Dhanush's portfolio and professional work. Please ask about his projects or skills.", sender: "ai", isStreaming: true },
       ])
     } finally {
       setIsLoading(false)
@@ -164,8 +225,8 @@ export function PortfolioChatbot() {
       icon={<Bot className="h-6 w-6" />}
     >
       <ExpandableChatHeader className="flex-col text-center justify-center">
-        <h1 className="text-xl font-semibold">Chat with Dhanush's AI ✨</h1>
-        <p className="text-sm text-muted-foreground">
+        <h1 className="text-lg font-semibold text-white/90">Chat with Dhanush's AI ✨</h1>
+        <p className="text-xs text-white/40">
           Ask me anything about his projects and skills
         </p>
       </ExpandableChatHeader>
@@ -173,43 +234,70 @@ export function PortfolioChatbot() {
       <ExpandableChatBody>
         <ChatMessageList>
           {messages.map((message) => (
-            <div key={message.id}>
+            <motion.div
+              key={message.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+            >
               <ChatBubble
                 variant={message.sender === "user" ? "sent" : "received"}
               >
                 <ChatBubbleMessage
                   variant={message.sender === "user" ? "sent" : "received"}
                 >
-                  {renderMarkdown(message.content)}
+                  {message.isStreaming ? (
+                    <StreamingMessage
+                      content={message.content}
+                      onDone={() => handleStreamDone(message.id)}
+                    />
+                  ) : (
+                    renderMarkdown(message.content)
+                  )}
                 </ChatBubbleMessage>
               </ChatBubble>
 
               {message.showQuickReplies && (
-                <div className="grid grid-cols-2 gap-2 mt-2 mb-4 px-1">
+                <div className="grid grid-cols-2 gap-2 mt-3 mb-4 px-1">
                   {QUICK_REPLIES.map((reply, idx) => (
                     <motion.button
                       key={idx}
-                      initial={{ opacity: 0, y: 8 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15 * idx, duration: 0.3 }}
-                      whileHover={{ scale: 1.05 }}
+                      transition={{ delay: 0.1 * idx, duration: 0.3 }}
+                      whileHover={{
+                        scale: 1.04,
+                        boxShadow: "0 0 20px rgba(59,130,246,0.2), 0 4px 16px rgba(0,0,0,0.3)",
+                        borderColor: "rgba(59,130,246,0.3)",
+                      }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => handleQuickReply(reply)}
-                      className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-primary/30 bg-primary/10 text-sm font-medium text-foreground hover:bg-primary/20 hover:border-primary/50 transition-colors duration-200"
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-white/80 hover:text-white transition-all duration-200 cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.05)",
+                        backdropFilter: "blur(10px)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                      }}
                     >
-                      <reply.icon className="h-4 w-4 text-primary shrink-0" />
+                      <reply.icon className="h-4 w-4 text-blue-400 shrink-0" />
                       <span>{reply.label}</span>
                     </motion.button>
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
 
           {isLoading && (
-            <ChatBubble variant="received">
-              <ChatBubbleMessage isLoading />
-            </ChatBubble>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChatBubble variant="received">
+                <ChatBubbleMessage isLoading />
+              </ChatBubble>
+            </motion.div>
           )}
         </ChatMessageList>
       </ExpandableChatBody>
@@ -229,25 +317,34 @@ export function PortfolioChatbot() {
                   handleSubmit(e as any)
                 }
               }}
-              placeholder="Ask about Dhanush's projects, skills, or experience..."
-              className={`flex-1 min-h-12 resize-none rounded-lg bg-background border p-3 shadow-none focus-visible:ring-1 focus-visible:ring-ring ${
-                inputError ? "border-destructive" : ""
-              }`}
+              placeholder="Ask about Dhanush..."
+              className="flex-1 min-h-12 resize-none rounded-xl p-3 text-white/90 placeholder:text-white/30 focus-visible:ring-1 focus-visible:ring-blue-500/30"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                border: inputError ? "1px solid rgba(239,68,68,0.5)" : "1px solid rgba(255,255,255,0.08)",
+              }}
               maxLength={200}
             />
-            <Button
-              type="submit"
-              size="icon"
-              className="shrink-0"
-              disabled={isLoading || !!inputError}
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                type="submit"
+                size="icon"
+                className="shrink-0 rounded-xl h-12 w-12"
+                disabled={isLoading || !!inputError}
+                style={{
+                  background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+                  boxShadow: "0 2px 12px rgba(59,130,246,0.3)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
+                <Send className="h-4 w-4 text-white" />
+              </Button>
+            </motion.div>
           </div>
           {inputError && (
-            <p className="text-xs text-destructive px-3">{inputError}</p>
+            <p className="text-xs text-red-400 px-3">{inputError}</p>
           )}
-          <p className="text-xs text-muted-foreground px-3">
+          <p className="text-xs text-white/30 px-3">
             {input.length}/200 characters
           </p>
         </form>
