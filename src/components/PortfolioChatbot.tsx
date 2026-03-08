@@ -260,6 +260,7 @@ export function PortfolioChatbot() {
                     <StreamingMessage
                       content={message.content}
                       onDone={() => handleStreamDone(message.id)}
+                      onTick={triggerScroll}
                     />
                   ) : (
                     renderMarkdown(message.content)
