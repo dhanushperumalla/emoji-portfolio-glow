@@ -205,6 +205,7 @@ export function PortfolioChatbot() {
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
+    setTimeout(triggerScroll, 50)
 
     try {
       const aiResponse = await aiService.generateResponse(trimmedInput)
