@@ -175,6 +175,7 @@ export function PortfolioChatbot() {
       isStreaming: true,
     }
     setMessages((prev) => [...prev, userMsg, aiMsg])
+    setTimeout(triggerScroll, 50)
   }
 
   const handleStreamDone = (msgId: number) => {
