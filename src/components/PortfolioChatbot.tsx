@@ -154,6 +154,9 @@ export function PortfolioChatbot() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [inputError, setInputError] = useState("")
+  const [scrollKey, setScrollKey] = useState(0)
+
+  const triggerScroll = () => setScrollKey((k) => k + 1)
 
   const handleQuickReply = (reply: typeof QUICK_REPLIES[0]) => {
     const userMsg: Message = {
