@@ -119,7 +119,7 @@ function useStreamingText(fullText: string, isStreaming: boolean, speed = 12) {
   return { displayed, done }
 }
 
-function StreamingMessage({ content, onDone, onTick }: { content: string; onDone: () => void; onTick?: () => void }) {
+function StreamingMessage({ content, onDone }: { content: string; onDone: () => void }) {
   const { displayed, done } = useStreamingText(content, true, 10)
   const calledRef = useRef(false)
 
@@ -129,10 +129,6 @@ function StreamingMessage({ content, onDone, onTick }: { content: string; onDone
       onDone()
     }
   }, [done, onDone])
-
-  useEffect(() => {
-    onTick?.()
-  }, [displayed, onTick])
 
   return (
     <>
@@ -158,9 +154,6 @@ export function PortfolioChatbot() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [inputError, setInputError] = useState("")
-  const [scrollKey, setScrollKey] = useState(0)
-
-  const triggerScroll = () => setScrollKey((k) => k + 1)
 
   const handleQuickReply = (reply: typeof QUICK_REPLIES[0]) => {
     const userMsg: Message = {
@@ -175,7 +168,6 @@ export function PortfolioChatbot() {
       isStreaming: true,
     }
     setMessages((prev) => [...prev, userMsg, aiMsg])
-    setTimeout(triggerScroll, 50)
   }
 
   const handleStreamDone = (msgId: number) => {
@@ -205,7 +197,6 @@ export function PortfolioChatbot() {
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
-    setTimeout(triggerScroll, 50)
 
     try {
       const aiResponse = await aiService.generateResponse(trimmedInput)
@@ -216,7 +207,6 @@ export function PortfolioChatbot() {
         isStreaming: true,
       }
       setMessages((prev) => [...prev, aiMsg])
-      setTimeout(triggerScroll, 50)
     } catch (error) {
       console.error('Error getting AI response:', error)
       setMessages((prev) => [
@@ -242,7 +232,7 @@ export function PortfolioChatbot() {
       </ExpandableChatHeader>
 
       <ExpandableChatBody>
-        <ChatMessageList smooth scrollKey={scrollKey}>
+        <ChatMessageList>
           {messages.map((message) => (
             <motion.div
               key={message.id}
@@ -260,7 +250,6 @@ export function PortfolioChatbot() {
                     <StreamingMessage
                       content={message.content}
                       onDone={() => handleStreamDone(message.id)}
-                      onTick={triggerScroll}
                     />
                   ) : (
                     renderMarkdown(message.content)
