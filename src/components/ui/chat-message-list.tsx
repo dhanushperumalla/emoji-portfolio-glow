@@ -23,10 +23,10 @@ const ChatMessageList = React.forwardRef<HTMLDivElement, ChatMessageListProps>(
     });
 
     React.useEffect(() => {
-      if (scrollKey !== undefined && scrollKey > 0) {
+      if (scrollKey !== undefined && scrollKey > 0 && autoScrollEnabled) {
         requestAnimationFrame(() => scrollToBottom());
       }
-    }, [scrollKey, scrollToBottom]);
+    }, [scrollKey, scrollToBottom, autoScrollEnabled]);
 
     return (
       <div className="relative w-full h-full">
