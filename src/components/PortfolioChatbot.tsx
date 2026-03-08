@@ -242,7 +242,7 @@ export function PortfolioChatbot() {
       </ExpandableChatHeader>
 
       <ExpandableChatBody>
-        <ChatMessageList>
+        <ChatMessageList smooth scrollKey={scrollKey}>
           {messages.map((message) => (
             <motion.div
               key={message.id}
