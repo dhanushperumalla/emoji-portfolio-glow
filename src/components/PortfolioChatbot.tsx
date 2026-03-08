@@ -216,6 +216,7 @@ export function PortfolioChatbot() {
         isStreaming: true,
       }
       setMessages((prev) => [...prev, aiMsg])
+      setTimeout(triggerScroll, 50)
     } catch (error) {
       console.error('Error getting AI response:', error)
       setMessages((prev) => [
