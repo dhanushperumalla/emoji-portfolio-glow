@@ -119,7 +119,7 @@ function useStreamingText(fullText: string, isStreaming: boolean, speed = 12) {
   return { displayed, done }
 }
 
-function StreamingMessage({ content, onDone }: { content: string; onDone: () => void }) {
+function StreamingMessage({ content, onDone, onTick }: { content: string; onDone: () => void; onTick?: () => void }) {
   const { displayed, done } = useStreamingText(content, true, 10)
   const calledRef = useRef(false)
 
@@ -129,6 +129,10 @@ function StreamingMessage({ content, onDone }: { content: string; onDone: () => 
       onDone()
     }
   }, [done, onDone])
+
+  useEffect(() => {
+    onTick?.()
+  }, [displayed, onTick])
 
   return (
     <>
